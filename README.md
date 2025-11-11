@@ -16,14 +16,24 @@ GitHub Copilot の能力を最大限に活用するための、体系的な Spec
 
 ## ✨ 主な特徴
 
-- 📋 **仕様ファースト** - すべてのコードは仕様書から始まる
-- 🎯 **ユーザーストーリー中心** - 技術レイヤーではなくユーザー価値で整理
-- 🔄 **段階的プロセス** - Specify → Plan → Tasks → Implement
-- 🤖 **GitHub Copilot 完全統合** - Copilot Chat コマンドで完結
-- 📐 **設計ドキュメント自動生成** - データモデル、API 契約書を自動生成
-- 🔀 **柔軟な計画変更対応** - spec が変更されても柔軟に再計画・調整可能
+## � リポジトリ構造
 
----
+このリポジトリは、spec 駆動開発フレームワーク自体の開発用です:
+
+```
+Github-Copilot-Spec-development/
+├── template/              # ユーザーのプロジェクトにコピーされるファイル
+│   ├── .github/          # GitHub Copilot設定
+│   ├── .specify/         # 仕様テンプレート
+│   ├── memory/           # プロジェクトメモリ
+│   └── specs/            # 機能仕様（空）
+├── docs/                 # フレームワークのドキュメント
+├── scripts/              # インストールスクリプト
+├── README.md             # このファイル
+└── GUIDE.md              # 詳細ガイド
+```
+
+**注意**: ユーザーがインストールすると、`template/`内のファイルが自分のプロジェクトにコピーされます。
 
 ## 🚀 クイックスタート
 
@@ -33,14 +43,47 @@ GitHub Copilot の能力を最大限に活用するための、体系的な Spec
 - VS Code + GitHub Copilot 拡張機能
 - Git
 
-### セットアップ
+### インストール方法
+
+#### 方法 1: ワンライナーインストール（推奨）
+
+```bash
+# 既存プロジェクトに追加する場合
+cd your-project
+curl -fsSL https://raw.githubusercontent.com/code-onigiri/Github-Copilot-Spec-development/main/scripts/quick-install.sh | bash
+
+# または、新規プロジェクトとして開始する場合
+git clone https://github.com/code-onigiri/Github-Copilot-Spec-development.git my-project
+cd my-project
+bash scripts/install.sh
+```
+
+#### 方法 2: 手動インストール
 
 ```bash
 # 1. リポジトリをクローン
 git clone https://github.com/code-onigiri/Github-Copilot-Spec-development.git
 cd Github-Copilot-Spec-development
 
-# 2. VS Codeで開く
+# 2. インストールスクリプトを実行
+bash scripts/install.sh
+
+# 3. VS Codeで開く
+code .
+```
+
+#### 方法 3: このリポジトリをそのまま使う
+
+```bash
+# 1. リポジトリをクローン
+git clone https://github.com/code-onigiri/Github-Copilot-Spec-development.git my-project
+cd my-project
+
+# 2. Originを変更（オプション）
+git remote remove origin
+git remote add origin YOUR_REPO_URL
+
+# 3. VS Codeで開く
 code .
 ```
 

@@ -1,0 +1,72 @@
+# GitHub Copilot Spec-Driven Development Repository
+# This .gitignore is for the framework repository itself
+
+# Template directory contains the actual files users will get
+# Keep template/ and its contents
+!template/
+!template/**/*
+
+# Keep documentation
+!docs/
+!docs/**/*
+
+# Keep scripts
+!scripts/
+!scripts/**/*
+
+# Keep root documentation files
+!README.md
+!GUIDE.md
+!SUMMARY.md
+!LICENSE
+
+# Development files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Don't track user's specs if they use this repo directly
+/specs/*
+!/specs/.gitkeep
+
+# Don't track user's memory if they use this repo directly  
+/memory/*
+!/memory/.gitkeep
+
+# Don't track user-specific GitHub config
+/.github/*
+!/template/.github/
+
+# Don't track user-specific .specify
+/.specify/*
+!/template/.specify/
+
+# Node modules (if any tools are added)
+node_modules/
+
+# Python (if any tools are added)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+Thumbs.db

@@ -101,6 +101,64 @@ Each entry should follow this format:
 
 ---
 
+### [2025-11-11] - CHANGED
+
+#### Repository Reorganization (template/ Directory Introduction)
+
+**Change**: Moved distributable project files (`.github/`, `.specify/`, `memory/`, `specs/`) into a new `template/` directory. Updated installer to copy from `template/` instead of root.
+**Reason**: Prevent repository pollution and clearly separate framework development assets from user-facing template files.
+**Impact**: Contributors must edit template versions of files under `template/`; installation scripts now rely on `template/` as source. Existing user projects are unaffected. Documentation updated (`README.md`, `SUMMARY.md`).
+**Related Specs**: N/A
+**Related PRs**: N/A
+**Migration Required**: No
+**Notes**:
+
+- When adding new prompts or instructions, place them in `template/.github/`.
+- Changelog lives inside `template/memory/changelog/` to ensure it is propagated to user projects.
+- Future enhancements: consider version tagging mechanism inside `template/memory/project-status.md`.
+
+---
+
+#### Installation Scripts
+
+**Change**: Added automated installation and uninstallation scripts  
+**Reason**: Make it easy for anyone to adopt spec-driven development  
+**Impact**: Users can now install with a single command  
+**Related Specs**:
+
+- `scripts/install.sh` - Main interactive installer
+- `scripts/quick-install.sh` - One-liner installation
+- `scripts/uninstall.sh` - Safe uninstaller with backup
+- `scripts/README.md` - Installation documentation
+
+**Related PRs**: N/A  
+**Migration Required**: No
+
+**Features**:
+
+- Interactive project setup with name and directory selection
+- Automatic directory structure creation
+- Template and configuration copying
+- VS Code integration setup
+- Git configuration
+- Backup creation before uninstall
+- Three installation modes (new project, existing project, in-place)
+
+**Usage**:
+
+```bash
+# Quick install
+curl -fsSL https://raw.githubusercontent.com/.../quick-install.sh | bash
+
+# Manual install
+bash scripts/install.sh
+
+# Uninstall
+bash scripts/uninstall.sh
+```
+
+---
+
 ### [YYYY-MM-DD] - [Change Type]
 
 [Your entries go here as the project evolves]
