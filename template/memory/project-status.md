@@ -1,7 +1,7 @@
 # Project Status
 
-**Project**: GitHub Copilot Spec-Driven Development  
-**Last Updated**: 2025-11-11
+Project: [PROJECT_NAME]
+Last Updated: [YYYY-MM-DD]
 
 ## Active Features
 
@@ -11,22 +11,23 @@
 
 ## Technology Stack
 
-[Will be populated from feature plans]
+Populate from feature plans (`specs/*/plan.md`).
 
 ## Recent Changes
 
-[Will be populated as features are implemented]
+Add entries when significant feature phases complete. See `memory/changelog/project-changelog.md`.
 
 ## Quick Commands
 
-- **Start New Feature**: `/ikak:specify [description]`
-- **Check Status**: `/ikak:status`
-- **List Features**: `ls -la specs/`
+- Start New Feature: `/ikak:specify [description]`
+- Debug with structure: `/ikak:debug`
+- Create constitution: `/ikak:constitution`
+- List Features: `ls -la specs/`
 
 ## Architecture Decisions
 
-[Will be populated from research.md files]
+Summaries synced from `context/architecture.md` ADRs.
 
 ## Notes
 
-This file is auto-updated by the `/ikak:status` command.
+Auto-updated by `/ikak:status` if enabled. Otherwise update manually during reviews.

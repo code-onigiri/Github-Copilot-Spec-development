@@ -1,5 +1,56 @@
 # Technology Stack
 
+Project: [PROJECT_NAME]
+Last Updated: [YYYY-MM-DD]
+
+## Purpose
+
+Document chosen technologies, reasons, and configuration pointers so contributors and AI respect constraints.
+
+---
+
+## Core Technologies
+
+### Frontend
+
+- Framework: [e.g., Next.js | React | Other] - Reason: [why]
+
+### Backend
+
+- Runtime: [e.g., Node.js 20 | Python 3.11] - Reason: [why]
+
+### Database
+
+- Primary DB: [e.g., PostgreSQL 15] - ORM: [e.g., Prisma]
+
+### Cache
+
+- [e.g., Redis] - Use cases: [what to cache]
+
+---
+
+## Development Tools
+
+- Package Manager: [pnpm | npm | yarn]
+- Linter/Formatter: [ESLint | Prettier | Black]
+- Test Runner: [Jest | Vitest | Pytest]
+
+---
+
+## Infrastructure
+
+- Hosting: [Vercel | AWS | Railway]
+- CI/CD: [GitHub Actions | GitLab CI]
+
+---
+
+## How to Update
+
+1. Document reasoning for changes
+2. Record migration steps if versions change
+
+# Technology Stack
+
 **Project**: [PROJECT_NAME]  
 **Last Updated**: [YYYY-MM-DD]
 

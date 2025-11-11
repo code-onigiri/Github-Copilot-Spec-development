@@ -1,3 +1,61 @@
+## Architecture Decision Records (ADR)
+
+Project: [PROJECT_NAME]
+Last Updated: [YYYY-MM-DD]
+
+### Purpose
+
+Store concise Architectural Decision Records (ADRs). Each ADR documents context, decision, and consequences so future contributors and AI can understand why choices were made.
+
+---
+
+### ADR Template
+
+Use this template for new entries. Copy and increment ADR number.
+
+### ADR-### [Decision Title]
+
+**Date**: YYYY-MM-DD
+**Status**: Proposed | Accepted | Deprecated | Superseded
+
+**Context**:
+What problem are we addressing?
+
+**Decision**:
+What decision did we make?
+
+**Consequences**:
+What becomes easier or harder?
+
+---
+
+### Example (replace with project-specific ADRs)
+
+#### ADR-001 Layered Architecture
+
+**Date**: [YYYY-MM-DD]
+**Status**: Accepted
+
+**Context**:
+Need to separate concerns to improve maintainability and testability.
+
+**Decision**:
+Adopt a layered architecture. Adjust names and folders to fit your stack.
+
+**Consequences**:
+
+- Improved testability and separation of concerns
+- Slightly more files and structure to navigate
+
+---
+
+## How to Add an ADR
+
+1. Create a new section with next ADR number
+2. Fill Date, Status, Context, Decision, Consequences
+3. Link to related code or PRs
+4. Keep ADRs append-only; mark superseded ADRs when replaced
+
 # Architecture Decision Record (ADR)
 
 **Project**: [PROJECT_NAME]  

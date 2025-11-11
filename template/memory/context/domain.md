@@ -1,5 +1,53 @@
 # Domain Knowledge
 
+Project: [PROJECT_NAME]
+Last Updated: [YYYY-MM-DD]
+
+## Purpose
+
+Capture business concepts, domain rules, and glossary terms that are specific to the project.
+
+---
+
+## Business Glossary
+
+### [Concept Name]
+
+**Definition**: [Short definition]
+
+**Business Rules**:
+
+- [Rule 1]
+- [Rule 2]
+
+**Example**:
+
+```
+[Example usage or data sample]
+```
+
+---
+
+## Domain Rules
+
+Describe hard constraints and validation rules that are non-negotiable.
+
+---
+
+## Integration Points
+
+List external services and their roles (auth, payments, analytics) with brief config pointers.
+
+---
+
+## How to Update
+
+1. Add new domain concepts as they arise
+2. Keep examples small and testable
+3. Link domain rules to specs that reference them
+
+# Domain Knowledge
+
 **Project**: [PROJECT_NAME]  
 **Last Updated**: [YYYY-MM-DD]
 

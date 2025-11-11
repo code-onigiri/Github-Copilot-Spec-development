@@ -87,23 +87,27 @@ memory/
 
 ## How to Maintain
 
-### When Starting a New Project
+### When Starting a New Project (Fill Templates)
 
-1. Fill in `constitution.md` with your principles
-2. Initialize `context/` files with your stack and conventions
-3. Create first entry in `changelog/`
+1. Replace `[PROJECT_NAME]` and `[YYYY-MM-DD]` placeholders in all memory files
+2. Customize principles in `constitution.md` (avoid removing core sections)
+3. Add ADR-001 in `context/architecture.md` reflecting initial structure
+4. Define naming rules in `context/conventions.md`
+5. Add 2-3 domain concepts in `context/domain.md`
+6. Record stack choices in `context/tech-stack.md`
+7. Add first changelog entry (ADDED: Initial setup)
 
 ### During Development
 
-1. Update `context/` when making architectural decisions
-2. Add entries to `changelog/` for significant changes
-3. Rarely update `constitution.md` (only for fundamental shifts)
+1. Append ADRs / rules rather than rewriting history
+2. Add changelog entries per meaningful spec or architectural change
+3. Amend constitution only via formal proposal (version bump)
 
 ### During Code Review
 
-1. Verify changes align with `constitution.md`
-2. Check if new patterns should be added to `context/`
-3. Ensure `changelog/` is updated for significant changes
+1. Validate adherence to principles & conventions
+2. Capture newly emerged patterns in `context/`
+3. Ensure changelog entry exists for larger shifts
 
 ## Integration with Commands
 

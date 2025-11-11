@@ -1,5 +1,49 @@
 # Coding Conventions
 
+Project: [PROJECT_NAME]
+Last Updated: [YYYY-MM-DD]
+
+## Purpose
+
+Document coding standards and conventions to keep codebase consistent across contributors and AI-assisted edits.
+
+---
+
+## General Principles
+
+1. Consistency over preference
+2. Readable over clever
+3. Explicit over implicit
+
+## Naming Conventions
+
+- Files & directories: kebab-case or PascalCase (define project preference)
+- Components: PascalCase
+- Utilities: kebab-case
+
+## Formatting & Linting
+
+- Specify chosen formatter (Prettier, clang-format) and linter (ESLint, flake8)
+- Add links to config files and pre-commit hooks
+
+## Comments
+
+- Explain the "why" for non-obvious code
+- Avoid commented-out dead code
+
+## Tests
+
+- Prefer unit tests with clear Arrange/Act/Assert
+- Add examples of test naming and minimal fixtures
+
+## How to Update
+
+1. Propose change via PR
+2. Agree on new rule and update examples
+3. Apply across codebase using automated tooling where possible
+
+# Coding Conventions
+
 **Project**: [PROJECT_NAME]  
 **Last Updated**: [YYYY-MM-DD]
 

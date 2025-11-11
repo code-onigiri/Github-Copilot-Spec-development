@@ -1,64 +1,49 @@
-```markdown
 # Project Constitution
 
-**Project Name**: GitHub Copilot Spec-Driven Development  
-**Ratification Date**: 2025-11-11  
-**Last Amended**: 2025-11-11  
-**Version**: 1.0.0
+Project: [PROJECT_NAME]
+Ratification Date: [YYYY-MM-DD]
+Last Amended: [YYYY-MM-DD]
+Version: 1.0.0
 
 ## Purpose
 
-This constitution defines the core principles and constraints that govern all development in this project. All specifications, plans, and implementations must align with these principles.
+Define the core principles and constraints that govern all development. All specifications, plans, and implementations must align with these principles.
 
 ## Principles
 
 ### Principle 1: Simplicity First
 
-**Rule**: Choose the simplest solution that meets requirements. Complexity must be justified.
-
-**Rationale**: Simple systems are easier to understand, maintain, and debug. Complexity should only be introduced when simpler alternatives are proven insufficient.
-
-**Enforcement**:
-
-- Plans must document rejected simpler alternatives
-- Complexity Tracking section required for violations
+- Rule: Choose the simplest solution that meets requirements. Complexity must be justified.
+- Rationale: Simple systems are easier to understand, maintain, and debug. Complexity should only be introduced when simpler alternatives are proven insufficient.
+- Enforcement:
+  - Plans must document rejected simpler alternatives
+  - Complexity Tracking section required for violations
 
 ### Principle 2: User Value Over Technical Perfection
 
-**Rule**: Prioritize delivering user value over technical elegance.
-
-**Rationale**: Features should be driven by user needs, not technical curiosity. Perfect code that doesn't solve user problems has no value.
-
-**Enforcement**:
-
-- All features must link to user scenarios
-- Technical decisions justified by user impact
+- Rule: Prioritize delivering user value over technical elegance.
+- Rationale: Features should be driven by user needs, not technical curiosity.
+- Enforcement:
+  - All features must link to user scenarios
+  - Technical decisions justified by user impact
 
 ### Principle 3: Testability
 
-**Rule**: All features must be testable with clear success criteria.
-
-**Rationale**: Untestable features cannot be verified, leading to uncertain quality and difficult maintenance.
-
-**Enforcement**:
-
-- Specifications must include testable acceptance criteria
-- Success criteria must be measurable and objective
+- Rule: All features must be testable with clear success criteria.
+- Rationale: Untestable features cannot be verified, leading to uncertain quality.
+- Enforcement:
+  - Specifications include measurable acceptance criteria
 
 ### Principle 4: Documentation Parity
 
-**Rule**: Code and documentation must stay synchronized.
-
-**Rationale**: Outdated documentation is worse than no documentation. The spec-driven process ensures documentation leads implementation.
-
-**Enforcement**:
-
-- Implementation must match specification
-- Changes require specification updates
+- Rule: Code and documentation must stay synchronized.
+- Enforcement:
+  - Implementation must match specification
+  - Changes require specification updates first
 
 ### Principle 5: [Add Your Own]
 
-[Define principles specific to your project]
+Describe principles specific to your project.
 
 ## Gates
 
@@ -93,9 +78,8 @@ This constitution can be amended through:
 
 ## Violations
 
-Justified violations must be documented in the plan's Complexity Tracking section:
+Document justified violations in the plan's Complexity Tracking section:
 
 - What principle is violated
 - Why it's necessary
 - What simpler alternative was rejected and why
-```

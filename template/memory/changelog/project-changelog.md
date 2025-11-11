@@ -42,126 +42,66 @@ Each entry should follow this format:
 
 ## Changelog Entries
 
-### [2025-11-11] - ADDED
+### [YYYY-MM-DD] - ADDED
 
-#### Critical Dialogue & Intent Triangulation
+#### [Feature Name]
 
-**Change**: Added Goal-Constraint-Reference (GCR) framework to spec template  
-**Reason**: Eliminate ambiguity in specifications and improve AI understanding  
-**Impact**: All new specs must include GCR section  
-**Related Specs**: `.specify/templates/spec-template.md`  
-**Related PRs**: N/A  
-**Migration Required**: No (only affects new specs)
-
----
-
-#### Triple Memory Architecture - Context Layer
-
-**Change**: Created context layer with architecture, conventions, domain, and tech-stack documents  
-**Reason**: Enable AI to maintain project knowledge across sessions  
-**Impact**: AI can now reference project-specific patterns and rules  
-**Related Specs**:
-
-- `memory/context/architecture.md`
-- `memory/context/conventions.md`
-- `memory/context/domain.md`
-- `memory/context/tech-stack.md`
-
-**Related PRs**: N/A  
-**Migration Required**: No
+**Change**: [What changed]
+**Reason**: [Why it changed]
+**Impact**: [Who/what is affected]
+**Related Specs**: [specs/###-feature-name/spec.md]
+**Related PRs**: [link]
+**Migration Required**: Yes/No
 
 ---
 
-#### Debug-Driven Fixing (DDF) Command
+### [YYYY-MM-DD] - CHANGED
 
-**Change**: Implemented `/ikak:debug` command with structured debugging workflow  
-**Reason**: Enable AI to explain "why" behind bug fixes, not just "what"  
-**Impact**: Structured debugging process with hypothesis testing and root cause analysis  
-**Related Specs**: `.github/prompts/ikak:debug.prompt.md`  
-**Related PRs**: N/A  
-**Migration Required**: No
+#### [Component / Area]
 
----
-
-#### Interactive Constitution Creator
-
-**Change**: Added `/ikak:constitution` command for interactive project constitution creation  
-**Reason**: Make it easy to establish project principles and rules from the start  
-**Impact**: Teams can now define their development philosophy through guided questions  
-**Related Specs**: `.github/prompts/ikak:constitution.prompt.md`  
-**Related PRs**: N/A  
-**Migration Required**: No
-
-**Features**:
-
-- Interactive Q&A for project context
-- 3 pre-built templates (Startup, Enterprise, Open Source)
-- Customizable principles and quality gates
-- Violation handling workflows
+**Change**: [Summary]
+**Reason**: [Motivation]
+**Impact**: [Effect on existing code/users]
+**Related Specs**: [links]
+**Migration Required**: Yes/No
+**Notes**: [Optional clarifications]
 
 ---
 
-### [2025-11-11] - CHANGED
+### [YYYY-MM-DD] - BREAKING
 
-#### Repository Reorganization (template/ Directory Introduction)
+#### [Breaking Change Title]
 
-**Change**: Moved distributable project files (`.github/`, `.specify/`, `memory/`, `specs/`) into a new `template/` directory. Updated installer to copy from `template/` instead of root.
-**Reason**: Prevent repository pollution and clearly separate framework development assets from user-facing template files.
-**Impact**: Contributors must edit template versions of files under `template/`; installation scripts now rely on `template/` as source. Existing user projects are unaffected. Documentation updated (`README.md`, `SUMMARY.md`).
-**Related Specs**: N/A
-**Related PRs**: N/A
-**Migration Required**: No
-**Notes**:
+**Change**: [Describe breaking change]
+**Reason**: [Why necessary]
+**Impact**: [Specific incompatibilities]
+**Migration Steps**:
 
-- When adding new prompts or instructions, place them in `template/.github/`.
-- Changelog lives inside `template/memory/changelog/` to ensure it is propagated to user projects.
-- Future enhancements: consider version tagging mechanism inside `template/memory/project-status.md`.
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
 ---
 
-#### Installation Scripts
+### [YYYY-MM-DD] - FIXED
 
-**Change**: Added automated installation and uninstallation scripts  
-**Reason**: Make it easy for anyone to adopt spec-driven development  
-**Impact**: Users can now install with a single command  
-**Related Specs**:
+#### [Issue / Bug Reference]
 
-- `scripts/install.sh` - Main interactive installer
-- `scripts/quick-install.sh` - One-liner installation
-- `scripts/uninstall.sh` - Safe uninstaller with backup
-- `scripts/README.md` - Installation documentation
-
-**Related PRs**: N/A  
-**Migration Required**: No
-
-**Features**:
-
-- Interactive project setup with name and directory selection
-- Automatic directory structure creation
-- Template and configuration copying
-- VS Code integration setup
-- Git configuration
-- Backup creation before uninstall
-- Three installation modes (new project, existing project, in-place)
-
-**Usage**:
-
-```bash
-# Quick install
-curl -fsSL https://raw.githubusercontent.com/.../quick-install.sh | bash
-
-# Manual install
-bash scripts/install.sh
-
-# Uninstall
-bash scripts/uninstall.sh
-```
+**Change**: [Fix implemented]
+**Root Cause**: [Underlying problem]
+**Verification**: [How tested]
+**Related PRs**: [link]
 
 ---
 
-### [YYYY-MM-DD] - [Change Type]
+### [YYYY-MM-DD] - DEPRECATED
 
-[Your entries go here as the project evolves]
+#### [Feature / API]
+
+**Change**: Marked as deprecated
+**Replacement**: [New feature/API]
+**Removal Date**: [YYYY-MM-DD]
+**Migration Guide**: [link]
 
 ---
 
