@@ -1,0 +1,74 @@
+{
+  // GitHub Copilot Configuration
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": true,
+    "markdown": true
+  },
+  "github.copilot.advanced": {
+    "agentConfig": ".github/copilot-agents.json",
+    "instructionsFile": ".github/copilot-instructions.md"
+  },
+
+  // Chat Modes
+  "chat.modeFilesLocations": {
+    ".github/chatmodes": true
+  },
+
+  // Prompt Files
+  "chat.promptFiles": true,
+  "chat.promptFilesLocations": {
+    ".github/prompts": true
+  },
+
+  // Instruction Files
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true
+  },
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+
+  // Code Review
+  "github.copilot.chat.reviewSelection.enabled": true, // Agent Mode
+  "chat.agent.enabled": true,
+  "chat.agent.maxRequests": 15,
+  "github.copilot.chat.agent.autoFix": true,
+  "github.copilot.chat.agent.runTasks": true,
+
+  // Additional Features
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.followUps": "on",
+  "chat.commandCenter.enabled": true,
+  "chat.detectParticipant.enabled": true,
+
+  // File Associations
+  "files.associations": {
+    "*.ikak.md": "markdown",
+    "*.chatmode.md": "markdown",
+    "*.prompt.md": "markdown",
+    "*.instructions.md": "markdown"
+  },
+
+  // File Exclusions
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true
+  },
+
+  // Editor Settings
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    }
+  }
+}
