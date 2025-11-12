@@ -35,7 +35,10 @@ prompts/
 ├── kotlin/
 │   ├── code.prompts.md    # Kotlin best practices
 │   └── rule.prompts.md    # Kotlin coding rules
-└── manifest.json          # Metadata and structure definition
+├── manifest.json          # Metadata and structure definition
+├── README.md              # This file (human documentation)
+├── Source.md              # Attribution, licenses, and references
+└── AI_UPDATE_GUIDE.md     # Guide for AI to update content
 ```
 
 ## File Types
@@ -155,6 +158,11 @@ The `manifest.json` file contains:
 - Usage guidelines
 - AI workflow instructions
 
+## Additional Documentation
+
+- **[Source.md](Source.md)** - Complete attribution, licenses, and references for all content
+- **[AI_UPDATE_GUIDE.md](AI_UPDATE_GUIDE.md)** - Guide for AI assistants to easily update and add content
+
 ## Contributing
 
 When adding a new language:
@@ -163,6 +171,9 @@ When adding a new language:
 2. Add `code.prompts.md` with best practices
 3. Add `rule.prompts.md` with coding rules
 4. Update `manifest.json` with the new language
+5. Add attribution to `Source.md` with proper licenses
+
+For detailed instructions, see [AI_UPDATE_GUIDE.md](AI_UPDATE_GUIDE.md).
 
 ## Version History
 
@@ -170,10 +181,14 @@ When adding a new language:
   - Separated best practices (`code.prompts.md`) from rules (`rule.prompts.md`)
   - Created organized directory structure per language
   - Updated manifest to reflect new structure
+  - Added `Source.md` for attribution and licenses
+  - Added `AI_UPDATE_GUIDE.md` for easy AI-driven updates
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
+
+All content sources are properly attributed in [Source.md](Source.md) with their respective licenses.
 
 ---
 
