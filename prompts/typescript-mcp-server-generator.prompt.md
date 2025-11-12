@@ -29,6 +29,94 @@ last_synced: 2025-11-12T00:00:00Z
 | lintTool    | string   | no       | `eslint` / `biome` から選択 (default: `eslint`) |
 | description | string   | no       | README 用概要                                   |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from [github/awesome-copilot prompt-builder.prompt.md](https://github.com/github/awesome-copilot/tree/main/prompts/prompt-builder.prompt.md)
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **serverName Validation**:
+   - Must be non-empty, lowercase, no spaces
+   - Pattern: `^[a-z0-9\-]+$` (alphanumeric + hyphens only)
+   - If invalid, halt and request valid name with examples
+
+2. **toolNames Validation**:
+   - Array must contain ≥1 element
+   - Each tool name: non-empty, no duplicates, pattern `^[a-zA-Z][a-zA-Z0-9\-]*$`
+   - If ambiguous (e.g., "user management" → "user-manager" or "manage-users"?), ask for clarification
+
+3. **promptName Validation**:
+   - Non-empty, kebab-case preferred
+   - If missing semantic meaning (e.g., "test"), request descriptive name
+
+4. **lintTool Selection**:
+   - Default: `eslint` (if not specified)
+   - Validate choice: must be `eslint` or `biome`
+   - If user unsure, explain: "ESLint: mature ecosystem, extensive plugins; Biome: faster, all-in-one toolchain"
+
+5. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+   - Example clarification: "Brief description" → "Please provide at least 10 words describing server purpose, e.g., 'MCP server for managing user authentication and authorization with OAuth2 support'"
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from [github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md](https://github.com/github/awesome-copilot/tree/main/prompts/copilot-instructions-blueprint-generator.prompt.md)
+
+Before generating code, scan workspace for existing MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+   ```bash
+   # Declare intent before tool use
+   "Searching workspace for existing MCP server implementations to extract consistent patterns..."
+   ```
+   - Search for: `@modelcontextprotocol/sdk`, `server.ts`, `tools/`, `prompts/` directories
+   - If found, analyze: package structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+   - **Naming conventions**: camelCase vs kebab-case for tool/prompt names
+   - **Error handling**: try-catch blocks, custom error classes, or zod safeParse
+   - **Logging**: console.log vs winston/pino, log levels used
+   - **Test organization**: describe blocks, test file naming (*.test.ts vs *.spec.ts)
+
+3. **Apply Patterns to New Code**:
+   - Match existing indentation style (2 spaces, 4 spaces, tabs)
+   - Follow existing import ordering (stdlib → external → internal)
+   - Use same dependency injection approach (constructor injection, factory functions)
+   - Mirror existing file organization (flat vs nested directories)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses `.then()` chains, don't generate `async/await`
+   - If codebase has no logger, don't add winston
+   - If tests use Jest, don't generate Vitest (unless explicitly requested)
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from [github/awesome-copilot taming-copilot.instructions.md](https://github.com/github/awesome-copilot/tree/main/instructions/taming-copilot.instructions.md)
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+   - "Searching workspace for existing TypeScript MCP server patterns..."
+   - Tool: `search/codebase` with pattern `**/*.ts` + `@modelcontextprotocol/sdk`
+
+2. **File Creation**:
+   - "Creating TypeScript MCP server at src/server.ts with tool handlers for: ${toolNames.join(', ')}..."
+   - Tool: `edit/createFile` with path `src/server.ts`
+
+3. **Lint Validation**:
+   - "Running lint validation with ${lintTool} (zero tolerance mode)..."
+   - Tool: `runCommands` with `npm run lint -- --max-warnings=0` (ESLint) or `npm run lint` (Biome)
+
+4. **Test Execution**:
+   - "Executing test suite with Vitest to verify tool handlers and input validation..."
+   - Tool: `runCommands` with `npm test -- --coverage`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
 ## Workflow
 
 1. Validate: 空/重複/スペースのみ → エラー。
@@ -59,12 +147,100 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - toolNames 長さ >=1
 - 重複なし / invalid chars (`[^a-zA-Z0-9\-]`)
 - すべての handler が `Promise<...>` を返す
 - zod parse 失敗例をテストに含む
-- **Lint: `npm run lint` がゼロエラー・ゼロ警告で終了必須**
+- **Lint: `npm run lint` (eslint . --max-warnings=0 OR biome check .) がゼロエラー・ゼロ警告で終了必須**
+- **Format: `npm run format:check` が diff 無し必須**
 - **Style: Google TypeScript Style Guide 準拠 (2 space indent, single quotes, trailing commas)**
+
+### Commands
+
+```bash
+npm run build         # TypeScript compilation must succeed
+npm test              # All tests must pass with coverage >80%
+npm run lint          # Zero errors/warnings (ESLint --max-warnings=0 or Biome)
+npm run format:check  # No formatting diffs (prettier --check or biome format)
+npm run type-check    # tsc --noEmit must pass
+```
+
+### Edge Cases
+
+- Empty input → zod validation error with clear message
+- Invalid tool name (spaces, special chars) → schema rejection
+- Missing required field → ZodError with path info
+- Large input (>10KB) → graceful error, no crash
+- Concurrent requests → async handlers don't block each other
+
+### Failure Modes
+
+- **Type safety violation**: any 型の使用 → ESLint error `@typescript-eslint/no-explicit-any`
+- **Unsafe operation**: unchecked Promise → ESLint error `@typescript-eslint/no-floating-promises`
+- **Missing error handling**: try-catch 無し → runtime crash, test failure
+- **Format violation**: Google Style deviation → prettier/biome format error
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from [github/awesome-copilot prompt.instructions.md Quality Assurance Checklist](https://github.com/github/awesome-copilot/tree/main/instructions/prompt.instructions.md)
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+   - serverName still contains spaces/uppercase after clarification
+   - toolNames array empty or contains duplicates after correction
+   - promptName remains semantically meaningless (e.g., "test", "tmp")
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+   - `npm run lint` exits with >0 errors
+   - Auto-fix with `npm run lint -- --fix` fails to resolve all issues
+   - Biome check reports unfixable errors
+
+3. **Type Safety Violations** (no retries, immediate halt):
+   - `any` type detected in generated code (violates `@typescript-eslint/no-explicit-any`)
+   - Unsafe type assertions (`as unknown as T`)
+   - Missing return type annotations on exported functions
+
+4. **Tool Access Denied** (no retries):
+   - `search/codebase` permission denied
+   - `edit/createFile` fails due to file system restrictions
+   - `runCommands` blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+   - `npm test` exits with non-zero code
+   - Coverage below 80% threshold (configurable)
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - `npm run build` → TypeScript compilation errors persist
+   - `npm run type-check` → tsc --noEmit reports type errors
+   - `npm run format:check` → formatting diffs remain after auto-fix
+
+**Error Reporting Format**:
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+- Input: serverName="${serverName}", toolNames=[${toolNames}]
+- Lint Tool: ${lintTool}
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+- [ ] All input validations passed
+- [ ] Lint errors = 0, warnings = 0
+- [ ] Tests pass with coverage ≥80%
+- [ ] Type checks pass (`tsc --noEmit`)
+- [ ] Format checks pass (no diffs)
+- [ ] All tool handlers return `Promise<T>`
+- [ ] Zod schemas validate expected input/error cases
 
 ## File Tree
 

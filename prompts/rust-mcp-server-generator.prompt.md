@@ -27,6 +27,92 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成プロンプト名      |
 | description | string | no       | README 用概要         |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **crateName Validation**:
+
+- Must match `^[a-z][a-z0-9\-]+$` (kebab-case)
+- No spaces, no uppercase, must be valid crate name
+- If invalid, halt and request valid example (e.g., my-mcp-server)
+
+2. **promptName Validation**:
+
+- Non-empty, kebab-case preferred
+- If missing semantic meaning, request descriptive name
+
+3. **description Validation**:
+
+- If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing Rust MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+- Declare intent before tool use: "Searching workspace for existing Rust MCP server implementations to extract consistent patterns..."
+- Search for: Cargo.toml, src/main.rs, handlers.rs, prompt.rs
+- If found, analyze: module structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+- Naming conventions: snake_case for functions, kebab-case for crates
+- Error handling: anyhow, thiserror, Result<T, E>
+- Logging: tracing vs log, log levels used
+- Test organization: #[cfg(test)], test modules, assert macros
+
+3. **Apply Patterns to New Code**:
+
+- Match existing indentation style (4 spaces vs tabs)
+- Follow import ordering (stdlib → external → internal)
+- Use same error propagation approach
+- Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+
+- If codebase uses anyhow, don't add custom error types
+- If tests use stdlib assert, don't generate custom macros
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+- "Searching workspace for existing Rust MCP server patterns..."
+- Tool: search/codebase with pattern `**/*.rs` + Cargo.toml
+
+2. **File Creation**:
+
+- "Creating Rust MCP server at src/main.rs with handler for: ${promptName}..."
+- Tool: edit/createFile with path src/main.rs
+
+3. **Lint Validation**:
+
+- "Running lint validation with cargo clippy (zero tolerance mode)..."
+- Tool: runCommands with `cargo clippy -- -D warnings`
+
+4. **Test Execution**:
+
+- "Executing test suite with cargo test to verify handlers and input validation..."
+- Tool: runCommands with `cargo test -- --nocapture`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. crateName バリデーション (正規表現 `^[a-z][a-z0-9\-]+$`)。
@@ -51,13 +137,102 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - crateName 不正時: 明示エラー
 - `divide` 0 除算 → Result Err("divide_by_zero")
 - すべての `pub fn` が使用されるかテストで参照
 - テスト 1 つでも失敗する設計は不可
-- **Lint: `cargo clippy -- -D warnings` がゼロエラー必須**
+- **Lint: `cargo clippy -- -D warnings` がゼロエラー必須 (pedantic + nursery deny)**
 - **Format: `cargo fmt --check` が diff 無し必須**
 - **Style: [Rust Style Guide](https://doc.rust-lang.org/beta/style-guide/) 準拠 (4 space, snake_case, explicit lifetimes)**
+
+### Commands
+
+```bash
+cargo build --release          # Compilation with optimizations
+cargo test -- --nocapture      # All tests pass, see output
+cargo clippy -- -D warnings    # Pedantic+nursery deny, zero warnings
+cargo fmt -- --check           # No formatting diffs
+cargo doc --no-deps            # Documentation builds successfully
+```
+
+### Edge Cases
+
+- `unwrap()` / `expect()` 使用 → clippy deny error (use `?` or match)
+- `todo!()` / `unimplemented!()` → clippy deny error
+- Wildcard import `use module::*` → clippy deny error
+- Panic in handler → test catches with `#[should_panic]` or Result
+- Async runtime not initialized → tokio::test attribute required
+
+### Failure Modes
+
+- **Missing error propagation**: `let x = f().unwrap()` → clippy::unwrap_used
+- **Unused Result**: `f();` で Result 無視 → clippy::unused_must_use
+- **Dead code**: 未使用関数 → cargo warn dead_code (CI fail)
+- **Non-exhaustive match**: enum variant 未処理 → compiler error
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+- crateName still invalid after clarification
+- promptName empty or invalid after correction
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+- cargo clippy exits with >0 errors
+- cargo fmt reports diffs after auto-fix
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+- unwrap()/expect()/todo!()/wildcard imports detected (clippy deny)
+
+4. **Tool Access Denied** (no retries):
+
+- search/codebase permission denied
+- edit/createFile fails due to file system restrictions
+- runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+- cargo test exits with non-zero code
+- Coverage below threshold
+- Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+
+- cargo build reports compilation errors
+- cargo fmt reports diffs after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: crateName="${crateName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass
+- [ ] cargo fmt reports no diffs
+- [ ] No unwrap/expect/todo!/wildcard imports
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

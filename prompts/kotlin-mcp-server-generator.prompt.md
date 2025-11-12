@@ -26,6 +26,94 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成プロンプト名                        |
 | description | string | no       | 概要                                    |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **packageName Validation**:
+
+   - Must match `[a-z][a-z0-9\.]*` (Kotlin package pattern)
+   - No spaces, no uppercase, must be valid package name
+   - If invalid, halt and request valid example (e.g., com.example.mcp)
+
+2. **toolName Validation**:
+
+   - Non-empty, starts with a letter, only alphanumeric and hyphens
+   - If ambiguous, ask for clarification
+
+3. **promptName Validation**:
+
+   - Non-empty, kebab-case preferred
+   - If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing Kotlin MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+   - Declare intent before tool use: "Searching workspace for existing Kotlin MCP server implementations to extract consistent patterns..."
+   - Search for: build.gradle.kts, src/commonMain/kotlin, src/commonTest/kotlin
+   - If found, analyze: package structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+   - Naming conventions: camelCase for methods, kebab-case for prompts
+   - Error handling: sealed Result, custom exceptions
+   - Logging: println vs logger, log levels used
+   - Test organization: kotest, runTest
+
+3. **Apply Patterns to New Code**:
+
+   - Match existing indentation style (4 spaces vs tabs)
+   - Follow import ordering (stdlib → external → internal)
+   - Use same dependency injection approach
+   - Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses println, don't add logger
+   - If tests use kotest, don't generate JUnit
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+   - "Searching workspace for existing Kotlin MCP server patterns..."
+   - Tool: search/codebase with pattern `**/*.kt` + build.gradle.kts
+
+2. **File Creation**:
+
+   - "Creating Kotlin MCP server at src/commonMain/kotlin/Server.kt with handler for: ${toolName}..."
+   - Tool: edit/createFile with path src/commonMain/kotlin/Server.kt
+
+3. **Lint Validation**:
+
+   - "Running lint validation with ktlint/detekt (zero tolerance mode)..."
+   - Tool: runCommands with `./gradlew ktlintCheck detekt`
+
+4. **Test Execution**:
+   - "Executing test suite with kotest to verify handlers and input validation..."
+   - Tool: runCommands with `./gradlew test`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: packageName が `[a-z][a-z0-9\.]*` パターン。
@@ -52,6 +140,8 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - packageName 不正時: 明示エラー
 - Tool handler で null/blank input → Result.Error("bad_request")
 - Divide by zero → Result.Error("divide_by_zero")
@@ -60,6 +150,93 @@ last_synced: 2025-11-12T00:00:00Z
 - **Lint: `./gradlew ktlintCheck detekt` がゼロエラー必須**
 - **Format: `./gradlew ktlintFormat` で自動整形**
 - **Style: [Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html) 準拠 (4 space, camelCase)**
+
+### Commands
+
+```bash
+./gradlew build                # Compilation + tests
+./gradlew test                 # All kotest tests pass
+./gradlew ktlintCheck          # ktlint style verification
+./gradlew detekt               # Complexity + code smells (threshold 25)
+./gradlew koverReport          # Coverage report (aim >80%)
+```
+
+### Edge Cases
+
+- `!!` operator → detekt error (NullSafety rule)
+- Long method (>25 lines) → detekt LongMethod error
+- Nested blocks >4 levels → detekt NestedBlockDepth error
+- Magic number → detekt MagicNumber warning (use const)
+- Sealed class 未処理 branch → compiler exhaustiveness check
+
+### Failure Modes
+
+- **Force unwrap**: `value!!` → detekt error, use `?.let` or `?:`
+- **Cognitive complexity >25**: 条件分岐多すぎ → detekt CognitiveComplexity
+- **Too many functions (>15)**: クラス肥大化 → detekt TooManyFunctions
+- **Missing kdoc**: public function without doc → detekt UndocumentedPublicFunction
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+   - packageName still invalid after clarification
+   - toolName empty or invalid after correction
+   - promptName remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+   - ktlintCheck/detekt run exits with >0 errors
+   - ktlintFormat reports diffs after auto-fix
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+   - !! operator, long method, nested blocks, missing kdoc
+
+4. **Tool Access Denied** (no retries):
+
+   - search/codebase permission denied
+   - edit/createFile fails due to file system restrictions
+   - runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+   - gradlew test exits with non-zero code
+   - Coverage below 80% threshold
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - gradlew build reports compilation errors
+   - ktlintFormat reports diffs after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: packageName="${packageName}", toolName="${toolName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass with coverage ≥80%
+- [ ] ktlintFormat reports no diffs
+- [ ] No !! operator, long method, nested blocks, missing kdoc
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

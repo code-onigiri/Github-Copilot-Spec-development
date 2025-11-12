@@ -8,7 +8,7 @@
 
 ## 📚 研究概要
 
-本研究は、GitHub Copilot Chat 専用の Spec-Driven Development (SDD)フレームワークを構築するため、世界の主要 3 プロジェクトを徹底分析し、独自の価値提案を策定しました。
+本研究は、GitHub Copilot Chat 専用の Spec-Driven Development (SDD)フレームワークを構築するため、世界の主要 3 プロジェクトを徹底分析し、独自の価値提案を策定しました。さらに、GitHub 公式リポジトリ [awesome-copilot](https://github.com/github/awesome-copilot) から Copilot 性能最適化戦略を抽出し、当プロジェクトの言語別プロンプトに統合しました。
 
 ---
 
@@ -32,6 +32,12 @@
 **強み**: Steering、テンプレートカスタマイズ、Fast-to-Review 設計  
 **詳細**: [cc-sdd-analysis.md](./cc-sdd-analysis.md)
 
+### 4. [awesome-copilot](https://github.com/github/awesome-copilot)
+
+**特徴**: GitHub 公式の Copilot カスタマイゼーション総合リソース  
+**強み**: プロンプト品質基準、インタラクティブ改善ワークフロー、コードベース駆動指示生成  
+**詳細**: [copilot-performance-optimization.md](./copilot-performance-optimization.md)
+
 ---
 
 ## 📊 比較分析
@@ -45,6 +51,16 @@
 - cc-sdd: プロジェクトメモリーと日本語対応 ★★★★★
 
 **詳細**: [comparison.md](./comparison.md)
+
+---
+
+## 🛠️ 技術基盤研究
+
+### Lint Enforcement Strategy
+
+**目的**: 9 言語（TypeScript, Go, Rust, Java, Kotlin, Swift, C#, Ruby, PHP）にわたる超厳格 lint 戦略  
+**特徴**: Zero warnings policy、言語別複雑度閾値、自動修正優先、CI 統合、詳細 Validation パターン  
+**詳細**: [lint-enforcement-matrix.md](./lint-enforcement-matrix.md)
 
 ---
 

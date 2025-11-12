@@ -26,6 +26,94 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成プロンプト名            |
 | description | string | no       | 概要                        |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **projectName Validation**:
+
+   - Must match `^[A-Z][a-zA-Z0-9]*$` (PascalCase)
+   - No spaces, must be valid C# project name
+   - If invalid, halt and request valid example (e.g., MyMcpServer)
+
+2. **toolName Validation**:
+
+   - Non-empty, starts with a letter, only alphanumeric and hyphens
+   - If ambiguous, ask for clarification
+
+3. **promptName Validation**:
+
+   - Non-empty, kebab-case preferred
+   - If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing C# MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+   - Declare intent before tool use: "Searching workspace for existing C# MCP server implementations to extract consistent patterns..."
+   - Search for: .csproj, Program.cs, Tools, Prompts, Tests
+   - If found, analyze: project structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+   - Naming conventions: PascalCase for classes, camelCase for methods
+   - Error handling: ArgumentException, custom exceptions
+   - Logging: Console.WriteLine vs ILogger, log levels used
+   - Test organization: xUnit, test file naming
+
+3. **Apply Patterns to New Code**:
+
+   - Match existing indentation style (4 spaces vs tabs)
+   - Follow import ordering (stdlib → external → internal)
+   - Use same dependency injection approach
+   - Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses Console.WriteLine, don't add ILogger
+   - If tests use xUnit, don't generate NUnit
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+   - "Searching workspace for existing C# MCP server patterns..."
+   - Tool: search/codebase with pattern `**/*.cs` + .csproj
+
+2. **File Creation**:
+
+   - "Creating C# MCP server at Program.cs with handler for: ${toolName}..."
+   - Tool: edit/createFile with path Program.cs
+
+3. **Lint Validation**:
+
+   - "Running lint validation with dotnet format/roslyn analyzers (zero tolerance mode)..."
+   - Tool: runCommands with `dotnet format --verify-no-changes` and analyzers
+
+4. **Test Execution**:
+   - "Executing test suite with xUnit to verify handlers and input validation..."
+   - Tool: runCommands with `dotnet test`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: projectName が `^[A-Z][a-zA-Z0-9]*$` パターン。
@@ -53,6 +141,8 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - projectName 不正時: 明示エラー
 - Tool handler で null/empty input → throw ArgumentException("bad_request")
 - Divide by zero → throw DivideByZeroException
@@ -61,6 +151,91 @@ last_synced: 2025-11-12T00:00:00Z
 - **Lint: `dotnet format --verify-no-changes` がゼロ diff 必須**
 - **Analyzer: Roslyn analyzers (StyleCop/FxCop) がゼロ warning 必須**
 - **Style: [C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions) 準拠**
+
+### Commands
+
+```bash
+dotnet build                          # Compilation succeeds
+dotnet test                           # All xUnit tests pass
+dotnet format --verify-no-changes     # No formatting diffs
+dotnet build /warnaserror             # Treat all warnings as errors
+dotnet tool run dotnet-reportgenerator # Coverage report (aim >80%)
+```
+
+### Edge Cases
+
+- Null reference → use nullable reference types (`string?`), not `!` suppression
+- Async void → compiler warns, use `async Task` instead
+- LINQ deferred execution → `.ToList()` if immediate evaluation needed
+- Culture-dependent formatting → CA1305 warns, use `InvariantCulture`
+
+### Failure Modes
+
+- **Missing accessibility**: public なし → dotnet_style_require_accessibility_modifiers error
+- **Unused private member**: → IDE0051 error
+- **CA1062**: Null check 欠如 → FxCop error, validate parameters
+- **CA1822**: Static にできる → FxCop suggests making static
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+   - projectName still invalid after clarification
+   - toolName empty or invalid after correction
+   - promptName remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+   - dotnet format/analyzers run exits with >0 errors
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+   - missing accessibility, unused private member, CA1062, CA1822
+
+4. **Tool Access Denied** (no retries):
+
+   - search/codebase permission denied
+   - edit/createFile fails due to file system restrictions
+   - runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+   - dotnet test exits with non-zero code
+   - Coverage below threshold
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - dotnet build reports compilation errors
+   - dotnet format reports diffs after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: projectName="${projectName}", toolName="${toolName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass
+- [ ] dotnet format reports no diffs
+- [ ] No missing accessibility, unused private member, CA1062, CA1822
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

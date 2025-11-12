@@ -26,6 +26,94 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成プロンプト名               |
 | description | string | no       | 概要                           |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **packageName Validation**:
+
+   - Must match `^[a-z0-9-]+\/[a-z0-9-]+$` (composer package)
+   - No spaces, must be valid PHP composer package name
+   - If invalid, halt and request valid example (e.g., vendor/name)
+
+2. **toolName Validation**:
+
+   - Non-empty, starts with a letter, only alphanumeric and hyphens
+   - If ambiguous, ask for clarification
+
+3. **promptName Validation**:
+
+   - Non-empty, kebab-case preferred
+   - If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing PHP MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+   - Declare intent before tool use: "Searching workspace for existing PHP MCP server implementations to extract consistent patterns..."
+   - Search for: composer.json, src/Server.php, Tools, Prompts, Tests
+   - If found, analyze: module structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+   - Naming conventions: PSR-4, camelCase for methods, kebab-case for files
+   - Error handling: InvalidArgumentException, custom exceptions
+   - Logging: echo vs logger, log levels used
+   - Test organization: PHPUnit, test file naming
+
+3. **Apply Patterns to New Code**:
+
+   - Match existing indentation style (4 spaces vs tabs)
+   - Follow require ordering (stdlib → external → internal)
+   - Use same error propagation approach
+   - Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses echo, don't add logger
+   - If tests use PHPUnit, don't generate Codeception
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+   - "Searching workspace for existing PHP MCP server patterns..."
+   - Tool: search/codebase with pattern `**/*.php` + composer.json
+
+2. **File Creation**:
+
+   - "Creating PHP MCP server at src/Server.php with handler for: ${toolName}..."
+   - Tool: edit/createFile with path src/Server.php
+
+3. **Lint Validation**:
+
+   - "Running lint validation with phpcs/phpstan (zero tolerance mode)..."
+   - Tool: runCommands with `vendor/bin/phpcs --standard=PSR12 src/` and `vendor/bin/phpstan analyse --level=max src/`
+
+4. **Test Execution**:
+   - "Executing test suite with PHPUnit to verify handlers and input validation..."
+   - Tool: runCommands with `vendor/bin/phpunit`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: `^[a-z0-9-]+\/[a-z0-9-]+$` (composer package)。
@@ -53,13 +141,101 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - packageName 不正 → エラー。
 - strict_types=1 を全ファイル先頭に。
 - 未定義キーアクセスで Notice を出さない実装 (null 合体 / ??)
 - 例外は InvalidArgumentException に統一 (bad_request/unknown_op など)
-- **Lint: `vendor/bin/phpcs --standard=PSR12` がゼロ error 必須**
+- **Lint: `vendor/bin/phpcs --standard=PSR12` がゼロ error 必須 (警告もエラー扱い)**
 - **Static: `vendor/bin/phpstan analyse --level=max` がゼロ error 必須**
 - **Style: [PSR-12](https://www.php-fig.org/psr/psr-12/) 準拠 (4 space, declare(strict_types=1))**
+
+### Commands
+
+```bash
+composer install                            # Dependencies install
+vendor/bin/phpunit                          # All tests pass
+vendor/bin/phpcs --standard=PSR12 src/      # Zero errors/warnings
+vendor/bin/phpcbf --standard=PSR12 src/     # Auto-fix violations
+vendor/bin/phpstan analyse --level=max src/ # Type safety, zero errors
+```
+
+### Edge Cases
+
+- Missing `declare(strict_types=1)` → PHPStan error (implicit type coercion detected)
+- Undefined array key → Notice, use `$arr['key'] ?? null`
+- Mixed type → PHPStan level max error, explicit type hints required
+- Nullable parameter without default → PHPStan error, add `= null`
+- Always-true condition → PHPStan checkAlwaysTrueBooleanCondition error
+
+### Failure Modes
+
+- **Missing strict_types**: 型安全性低下 → PHPStan treatPhpDocTypesAsCertain detects
+- **Line length >120**: → phpcs Generic.Files.LineLength error
+- **Explicit mixed**: → PHPStan checkExplicitMixed error, use specific type
+- **Missing callable signature**: → PHPStan checkMissingCallableSignature error
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+   - packageName still invalid after clarification
+   - toolName empty or invalid after correction
+   - promptName remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+   - phpcs/phpstan run exits with >0 errors
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+   - missing strict_types, line length, explicit mixed, missing callable signature
+
+4. **Tool Access Denied** (no retries):
+
+   - search/codebase permission denied
+   - edit/createFile fails due to file system restrictions
+   - runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+   - phpunit exits with non-zero code
+   - Coverage below threshold
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - composer install fails
+   - phpcbf reports errors after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: packageName="${packageName}", toolName="${toolName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass
+- [ ] phpcbf reports no errors
+- [ ] No missing strict_types, line length, explicit mixed, missing callable signature
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

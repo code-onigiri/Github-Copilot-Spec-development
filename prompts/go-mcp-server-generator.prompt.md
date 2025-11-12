@@ -28,6 +28,97 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成するプロンプト名                      |
 | description | string | no       | README 用概要                             |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **modulePath Validation**:
+
+- Must match `^[a-zA-Z0-9\.-]+\.[a-zA-Z0-9\.-]+/.+`
+- No leading `./`, no spaces, must be a valid Go module path
+- If invalid, halt and request valid example (e.g., github.com/user/app)
+
+2. **toolName Validation**:
+
+- Non-empty, starts with a letter, only alphanumeric and hyphens
+- If ambiguous (e.g., "user management"), ask for clarification
+
+3. **promptName Validation**:
+
+- Non-empty, kebab-case preferred
+- If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+
+- If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing Go MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+- Declare intent before tool use: "Searching workspace for existing Go MCP server implementations to extract consistent patterns..."
+- Search for: go.mod, server/main.go, tool.go, prompt.go
+- If found, analyze: package structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+- Naming conventions: camelCase vs kebab-case for tool/prompt names
+- Error handling: fmt.Errorf wrapping, custom error types
+- Logging: log vs zap, log levels used
+- Test organization: \*\_test.go files, testify vs stdlib
+
+3. **Apply Patterns to New Code**:
+
+- Match existing indentation style (tabs vs spaces)
+- Follow import ordering (stdlib → external → internal)
+- Use same dependency injection approach
+- Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+
+- If codebase uses stdlib log, don't add zap
+- If tests use stdlib, don't generate testify
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+- "Searching workspace for existing Go MCP server patterns..."
+- Tool: search/codebase with pattern `**/*.go` + go.mod
+
+2. **File Creation**:
+
+- "Creating Go MCP server at server/main.go with tool handler for: ${toolName}..."
+- Tool: edit/createFile with path server/main.go
+
+3. **Lint Validation**:
+
+- "Running lint validation with golangci-lint (zero tolerance mode)..."
+- Tool: runCommands with `golangci-lint run --timeout=5m`
+
+4. **Test Execution**:
+
+- "Executing test suite with go test to verify tool handler and input validation..."
+- Tool: runCommands with `go test -v -cover ./...`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: 空文字 / 先頭 `./` / スラッシュなし → エラー。
@@ -54,6 +145,8 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - modulePath: 正規表現 `^[a-zA-Z0-9\.-]+\.[a-zA-Z0-9\.-]+/.+` に一致
 - ツール名: 英数字/`-` のみ, 先頭英字
 - 重複ファイルなし
@@ -62,6 +155,96 @@ last_synced: 2025-11-12T00:00:00Z
 - **Lint: `go vet ./...` と `golangci-lint run` がゼロエラー必須**
 - **Format: `gofmt -d .` と `goimports -d .` が diff 無し必須**
 - **Style: [Effective Go](https://go.dev/doc/effective_go) + [Google Go Style](https://google.github.io/styleguide/go/) 準拠**
+
+### Commands
+
+```bash
+go build ./...                  # Compilation must succeed
+go test -v -cover ./...         # All tests pass, coverage >70%
+go vet ./...                    # Static analysis zero errors
+golangci-lint run --timeout=5m  # All linters pass (complexity <=10)
+gofmt -d . | wc -l             # Must output 0 (no diffs)
+goimports -d . | wc -l         # Must output 0 (no diffs)
+```
+
+### Edge Cases
+
+- nil pointer dereference → error with context, not panic
+- Context cancellation → handlers return ctx.Err() wrapped
+- Empty struct input → defaults applied or validation error
+- Race condition → use mutex or channel, detected by `go test -race`
+
+### Failure Modes
+
+- **Unwrapped error**: `return err` instead of `fmt.Errorf`: 失敗 → golangci-lint wrapcheck
+- **Unused variable**: 宣言後使用なし → `go vet` or `golangci-lint unused`
+- **Cyclomatic complexity >10**: 関数が複雑すぎ → golangci-lint gocyclo
+- **Missing error check**: `_, err := f(); doSomething()` → golangci-lint errcheck
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+- modulePath still invalid after clarification
+- toolName empty or invalid after correction
+- promptName remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+- golangci-lint run exits with >0 errors
+- go vet reports errors
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+- Unwrapped error detected (wrapcheck)
+- Cyclomatic complexity >10 (gocyclo)
+
+4. **Tool Access Denied** (no retries):
+
+- search/codebase permission denied
+- edit/createFile fails due to file system restrictions
+- runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+- go test exits with non-zero code
+- Coverage below 70% threshold
+- Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+
+- go build reports compilation errors
+- gofmt/goimports report diffs after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: modulePath="${modulePath}", toolName="${toolName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass with coverage ≥70%
+- [ ] gofmt/goimports report no diffs
+- [ ] All handlers wrap errors with fmt.Errorf
+- [ ] No cyclomatic complexity >10
+- [ ] All \*\_test.go files cover error cases
 
 ## Project Structure
 

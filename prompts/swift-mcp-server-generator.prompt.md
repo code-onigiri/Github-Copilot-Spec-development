@@ -26,6 +26,94 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成プロンプト名              |
 | description | string | no       | 概要                          |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **moduleName Validation**:
+
+   - Must match `^[A-Z][a-zA-Z0-9]*$` (UpperCamelCase)
+   - No spaces, must be valid Swift module name
+   - If invalid, halt and request valid example (e.g., MyMcpServer)
+
+2. **toolName Validation**:
+
+   - Non-empty, starts with a letter, only alphanumeric and hyphens
+   - If ambiguous, ask for clarification
+
+3. **promptName Validation**:
+
+   - Non-empty, kebab-case preferred
+   - If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing Swift MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+   - Declare intent before tool use: "Searching workspace for existing Swift MCP server implementations to extract consistent patterns..."
+   - Search for: Package.swift, Sources, Tests
+   - If found, analyze: module structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+   - Naming conventions: UpperCamelCase for modules, lowerCamelCase for methods
+   - Error handling: MCPError, throw/catch
+   - Logging: print vs os_log, log levels used
+   - Test organization: XCTest, test file naming
+
+3. **Apply Patterns to New Code**:
+
+   - Match existing indentation style (2 spaces vs 4 spaces)
+   - Follow import ordering (stdlib → external → internal)
+   - Use same error propagation approach
+   - Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses print, don't add os_log
+   - If tests use XCTest, don't generate Quick/Nimble
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+   - "Searching workspace for existing Swift MCP server patterns..."
+   - Tool: search/codebase with pattern `**/*.swift` + Package.swift
+
+2. **File Creation**:
+
+   - "Creating Swift MCP server at Sources/Server.swift with handler for: ${toolName}..."
+   - Tool: edit/createFile with path Sources/Server.swift
+
+3. **Lint Validation**:
+
+   - "Running lint validation with swiftlint/swift-format (zero tolerance mode)..."
+   - Tool: runCommands with `swiftlint lint --strict` and `swift-format lint --recursive Sources`
+
+4. **Test Execution**:
+   - "Executing test suite with XCTest to verify handlers and input validation..."
+   - Tool: runCommands with `swift test`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: moduleName が `^[A-Z][a-zA-Z0-9]*$` パターン。
@@ -53,14 +141,102 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - moduleName 不正時: 明示エラー
 - Tool handler で nil/empty input → throw MCPError.badRequest
 - Divide by zero → throw MCPError.invalidParams("divide_by_zero")
 - テスト必須: XCTAssertThrowsError
 - Force unwrap (!) 禁止 (guard / if let 使用)
 - **Lint: `swiftlint lint --strict` がゼロ warning/error 必須**
-- **Format: `swift-format format --in-place` で自動整形**
+- **Format: `swift-format lint --recursive Sources` で検証**
 - **Style: [Swift.org API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/) 準拠**
+
+### Commands
+
+```bash
+swift build                              # Compilation succeeds
+swift test                               # All XCTest cases pass
+swiftlint lint --strict                  # Zero warnings/errors (force_try severity: error)
+swift-format lint --recursive Sources    # Format verification
+swift-format format --in-place Sources   # Auto-format
+```
+
+### Edge Cases
+
+- `try!` force-try → SwiftLint error (force_try rule)
+- Unused declaration → SwiftLint analyzer unused_declaration error
+- Unused import → SwiftLint analyzer unused_import error
+- Optional chaining 深すぎ → guard let flat 化推奨
+- async function not awaited → compiler error
+
+### Failure Modes
+
+- **Force unwrap**: `value!` → runtime crash, use `guard let` or `if let`
+- **Force try**: `try! f()` → SwiftLint strict error
+- **Long line (>120)**: → SwiftLint line_length error
+- **Type name too long (>40)**: → SwiftLint type_name error
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+   - moduleName still invalid after clarification
+   - toolName empty or invalid after correction
+   - promptName remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+   - swiftlint/swift-format run exits with >0 errors
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+   - force unwrap (!), force try, long line, type name too long
+
+4. **Tool Access Denied** (no retries):
+
+   - search/codebase permission denied
+   - edit/createFile fails due to file system restrictions
+   - runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+   - swift test exits with non-zero code
+   - Coverage below threshold
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - swift build reports compilation errors
+   - swift-format reports diffs after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: moduleName="${moduleName}", toolName="${toolName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass
+- [ ] swift-format reports no diffs
+- [ ] No force unwrap/try, long line, type name too long
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

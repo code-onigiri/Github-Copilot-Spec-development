@@ -51,7 +51,7 @@ last_synced: 2025-11-12T00:00:00Z
 ## 🗃 命名規則
 
 `<language>-<short-purpose>.prompt.md`
-例: `go-mcp-server-generator.prompt.md`
+例: `go-prompts-for-[]-generator.prompt.md`
 
 ---
 
@@ -68,17 +68,17 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## 📂 言語別最低セット (Baseline Prompts)
 
-| Language   | 必須                 | 追加候補               | テストコマンド例                   |
-| ---------- | -------------------- | ---------------------- | ---------------------------------- |
-| typescript | mcp-server-generator | code-review, test-plan | `npm test` / `ts-node src/main.ts` |
-| go         | mcp-server-generator | error-audit            | `go test ./...`                    |
-| rust       | mcp-server-generator | performance-hints      | `cargo test`                       |
-| java       | mcp-server-generator | reactive-handler       | `./gradlew test`                   |
-| csharp     | mcp-server-generator | async-pattern          | `dotnet test`                      |
-| ruby       | mcp-server-generator | idiom-normalizer       | `bundle exec rspec`                |
-| php        | mcp-server-generator | psr-refactor           | `phpunit`                          |
-| swift      | mcp-server-generator | api-design-audit       | `swift test`                       |
-| kotlin     | mcp-server-generator | coroutine-safety       | `./gradlew test`                   |
+| Language   | 必須                     | 追加候補               | テストコマンド例                   |
+| ---------- | ------------------------ | ---------------------- | ---------------------------------- |
+| typescript | prompts-for-[]-generator | code-review, test-plan | `npm test` / `ts-node src/main.ts` |
+| go         | prompts-for-[]-generator | error-audit            | `go test ./...`                    |
+| rust       | prompts-for-[]-generator | performance-hints      | `cargo test`                       |
+| java       | prompts-for-[]-generator | reactive-handler       | `./gradlew test`                   |
+| csharp     | prompts-for-[]-generator | async-pattern          | `dotnet test`                      |
+| ruby       | prompts-for-[]-generator | idiom-normalizer       | `bundle exec rspec`                |
+| php        | prompts-for-[]-generator | psr-refactor           | `phpunit`                          |
+| swift      | prompts-for-[]-generator | api-design-audit       | `swift test`                       |
+| kotlin     | prompts-for-[]-generator | coroutine-safety       | `./gradlew test`                   |
 
 ---
 
@@ -254,22 +254,22 @@ MIT License 要約: 著作権表示と許諾表示保持条件下で使用/改�
   "version": "2025-11-12.1",
   "languages": {
     "go": {
-      "file": "go-mcp-server-generator.prompt.md",
+      "file": "prompts-for-go-generator.prompt.md",
       "upstream_commit": "<sha>",
       "checksum": "<sha256>"
     },
     "rust": {
-      "file": "rust-mcp-server-generator.prompt.md",
+      "file": "prompts-for-rust-generator.prompt.md",
       "upstream_commit": "<sha>",
       "checksum": "<sha256>"
     },
-    "typescript": { "file": "typescript-mcp-server-generator.prompt.md" },
-    "java": { "file": "java-mcp-server-generator.prompt.md" },
-    "kotlin": { "file": "kotlin-mcp-server-generator.prompt.md" },
-    "swift": { "file": "swift-mcp-server-generator.prompt.md" },
-    "csharp": { "file": "csharp-mcp-server-generator.prompt.md" },
-    "ruby": { "file": "ruby-mcp-server-generator.prompt.md" },
-    "php": { "file": "php-mcp-server-generator.prompt.md" }
+    "typescript": { "file": "prompts-for-typescript-generator.prompt.md" },
+    "java": { "file": "prompts-for-java-generator.prompt.md" },
+    "kotlin": { "file": "prompts-for-kotlin-generator.prompt.md" },
+    "swift": { "file": "prompts-for-swift-generator.prompt.md" },
+    "csharp": { "file": "prompts-for-csharp-generator.prompt.md" },
+    "ruby": { "file": "prompts-for-ruby-generator.prompt.md" },
+    "php": { "file": "prompts-for-php-generator.prompt.md" }
   }
 }
 ```

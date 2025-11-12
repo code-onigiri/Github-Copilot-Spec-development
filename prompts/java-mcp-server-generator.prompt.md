@@ -26,6 +26,94 @@ last_synced: 2025-11-12T00:00:00Z
 | promptName  | string | yes      | 生成プロンプト名                        |
 | description | string | no       | 概要                                    |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **packageName Validation**:
+
+   - Must match `[a-z][a-z0-9\.]*` (Java package pattern)
+   - No spaces, no uppercase, must be valid package name
+   - If invalid, halt and request valid example (e.g., com.example.mcp)
+
+2. **toolName Validation**:
+
+   - Non-empty, starts with a letter, only alphanumeric and hyphens
+   - If ambiguous, ask for clarification
+
+3. **promptName Validation**:
+
+   - Non-empty, kebab-case preferred
+   - If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing Java MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+   - Declare intent before tool use: "Searching workspace for existing Java MCP server implementations to extract consistent patterns..."
+   - Search for: build.gradle.kts, src/main/java, src/test/java
+   - If found, analyze: package structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+   - Naming conventions: camelCase for methods, kebab-case for prompts
+   - Error handling: Mono.error, custom exceptions
+   - Logging: SLF4J, log levels used
+   - Test organization: JUnit, StepVerifier
+
+3. **Apply Patterns to New Code**:
+
+   - Match existing indentation style (2 spaces vs 4 spaces)
+   - Follow import ordering (stdlib → external → internal)
+   - Use same dependency injection approach
+   - Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses SLF4J, don't add log4j
+   - If tests use JUnit, don't generate TestNG
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+   - "Searching workspace for existing Java MCP server patterns..."
+   - Tool: search/codebase with pattern `**/*.java` + build.gradle.kts
+
+2. **File Creation**:
+
+   - "Creating Java MCP server at src/main/java/Application.java with handler for: ${toolName}..."
+   - Tool: edit/createFile with path src/main/java/Application.java
+
+3. **Lint Validation**:
+
+   - "Running lint validation with checkstyle/spotbugs (zero tolerance mode)..."
+   - Tool: runCommands with `./gradlew checkstyleMain spotbugsMain`
+
+4. **Test Execution**:
+   - "Executing test suite with JUnit to verify handlers and input validation..."
+   - Tool: runCommands with `./gradlew test --info`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: packageName が `[a-z][a-z0-9\.]*` パターン。
@@ -52,6 +140,8 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - packageName 不正時: 明示エラー
 - Tool handler で null input → Mono.error(new IllegalArgumentException("bad_request"))
 - Divide by zero → Mono.error(new ArithmeticException("divide_by_zero"))
@@ -60,6 +150,93 @@ last_synced: 2025-11-12T00:00:00Z
 - **Lint: `./gradlew checkstyleMain spotbugsMain` がゼロエラー必須**
 - **Format: `./gradlew spotlessCheck` が diff 無し必須 (Google Java Format)**
 - **Style: [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) 準拠 (2 space, no wildcard imports)**
+
+### Commands
+
+```bash
+./gradlew build                # Compilation + tests pass
+./gradlew test --info          # All JUnit tests pass
+./gradlew checkstyleMain       # Google Style checks
+./gradlew spotbugsMain         # Static analysis (bug patterns)
+./gradlew spotlessCheck        # Google Java Format verification
+./gradlew jacocoTestReport     # Coverage report (aim >80%)
+```
+
+### Edge Cases
+
+- Optional.empty() → flatMap で NullPointerException 回避
+- Stream 空リスト → reduce with identity, not orElseThrow
+- Null from external API → Optional.ofNullable でラップ
+- Large collection processing → parallel stream でメモリ効率
+
+### Failure Modes
+
+- **Missing Javadoc**: public method without doc → Checkstyle error
+- **Unused import**: import 未使用 → Checkstyle UnusedImports
+- **Star import**: `import java.util.*` → Checkstyle AvoidStarImport
+- **NPE risk**: `.get()` without `isPresent()` → SpotBugs warning
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+   - packageName still invalid after clarification
+   - toolName empty or invalid after correction
+   - promptName remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+   - checkstyle/spotbugs run exits with >0 errors
+   - spotlessCheck reports diffs after auto-fix
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+   - Missing Javadoc, unused import, star import, NPE risk
+
+4. **Tool Access Denied** (no retries):
+
+   - search/codebase permission denied
+   - edit/createFile fails due to file system restrictions
+   - runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+   - gradlew test exits with non-zero code
+   - Coverage below 80% threshold
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - gradlew build reports compilation errors
+   - spotlessCheck reports diffs after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: packageName="${packageName}", toolName="${toolName}", promptName="${promptName}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass with coverage ≥80%
+- [ ] spotlessCheck reports no diffs
+- [ ] No missing Javadoc, unused import, star import, NPE risk
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

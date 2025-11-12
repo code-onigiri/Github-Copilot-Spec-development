@@ -1,0 +1,11 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.0/schema.json",
+  "formatter": { "lineWidth": 100 },
+  "linter": {
+    "rules": {
+      "recommended": true,
+      "style": { "noConsole": "error" },
+      "suspicious": { "noDuplicateObjectKeys": "error" }
+    }
+  }
+}

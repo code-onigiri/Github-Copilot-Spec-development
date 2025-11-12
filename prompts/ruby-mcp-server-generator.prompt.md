@@ -26,6 +26,94 @@ last_synced: 2025-11-12T00:00:00Z
 | prompt_name | string | yes      | 生成プロンプト名      |
 | description | string | no       | 概要                  |
 
+## Input Validation & Discovery
+
+> **Source**: Integrated from github/awesome-copilot prompt-builder.prompt.md
+
+Before generation, validate all inputs and clarify ambiguities:
+
+1. **gem_name Validation**:
+
+   - Must match `^[a-z][a-z0-9_]*$` (snake_case)
+   - No spaces, must be valid Ruby gem name
+   - If invalid, halt and request valid example (e.g., my_mcp_server)
+
+2. **tool_name Validation**:
+
+   - Non-empty, starts with a letter, only alphanumeric and underscores
+   - If ambiguous, ask for clarification
+
+3. **prompt_name Validation**:
+
+   - Non-empty, snake_case preferred
+   - If missing semantic meaning, request descriptive name
+
+4. **description Validation**:
+   - If empty or too vague (<10 words), request minimum 10-word description for README
+
+**Failure Trigger**: If any required input invalid after 2 clarification attempts, halt with detailed error message listing all validation failures.
+
+## Codebase Consistency Check
+
+> **Source**: Integrated from github/awesome-copilot copilot-instructions-blueprint-generator.prompt.md
+
+Before generating code, scan workspace for existing Ruby MCP servers and match their patterns:
+
+1. **Search for Existing MCP Servers**:
+
+   - Declare intent before tool use: "Searching workspace for existing Ruby MCP server implementations to extract consistent patterns..."
+   - Search for: Gemfile, lib/server.rb, tools, prompts, resources
+   - If found, analyze: module structure, error handling style, logging approach, test organization
+
+2. **Extract Patterns**:
+
+   - Naming conventions: snake_case for files, classes, methods
+   - Error handling: MCP::Error, raise/rescue
+   - Logging: puts vs logger, log levels used
+   - Test organization: RSpec, test file naming
+
+3. **Apply Patterns to New Code**:
+
+   - Match existing indentation style (2 spaces vs tabs)
+   - Follow require ordering (stdlib → external → internal)
+   - Use same error propagation approach
+   - Mirror file organization (flat vs nested)
+
+4. **Never Introduce New Patterns**:
+   - If codebase uses puts, don't add logger
+   - If tests use RSpec, don't generate Minitest
+
+**Principle**: Consistency with existing codebase > external best practices.
+
+## Tool Usage Declaration
+
+> **Source**: Integrated from github/awesome-copilot taming-copilot.instructions.md
+
+Before executing any tool, declare intent with concise statement immediately preceding tool call:
+
+1. **File Search**:
+
+   - "Searching workspace for existing Ruby MCP server patterns..."
+   - Tool: search/codebase with pattern `**/*.rb` + Gemfile
+
+2. **File Creation**:
+
+   - "Creating Ruby MCP server at lib/server.rb with handler for: ${tool_name}..."
+   - Tool: edit/createFile with path lib/server.rb
+
+3. **Lint Validation**:
+
+   - "Running lint validation with rubocop (zero tolerance mode)..."
+   - Tool: runCommands with `bundle exec rubocop`
+
+4. **Test Execution**:
+   - "Executing test suite with RSpec to verify handlers and input validation..."
+   - Tool: runCommands with `bundle exec rspec`
+
+**Purposeful Action Rule**: Every tool invocation must directly fulfill user request. Never search/modify unrelated files.
+
+## Workflow
+
 ## Workflow
 
 1. Validate: gem*name が `^[a-z]a-z0-9*]\*$` パターン。
@@ -55,6 +143,8 @@ last_synced: 2025-11-12T00:00:00Z
 
 ## Validation
 
+### Required Checks
+
 - gem_name 不正時: 明示エラー
 - Tool で nil/empty input → raise MCP::Error.bad_request
 - Divide by zero → raise MCP::Error.invalid_params("divide_by_zero")
@@ -63,6 +153,92 @@ last_synced: 2025-11-12T00:00:00Z
 - **Lint: `bundle exec rubocop` がゼロ offense 必須**
 - **Format: `bundle exec rubocop -a` で自動整形**
 - **Style: [Ruby Style Guide](https://rubystyle.guide/) 準拠 (2 space, snake_case, frozen_string_literal)**
+
+### Commands
+
+```bash
+bundle install               # Dependencies install
+bundle exec rspec            # All tests pass
+bundle exec rubocop          # Zero offenses (MethodLength <=15, AbcSize <=20)
+bundle exec rubocop -a       # Auto-correct offenses
+simplecov                    # Coverage report (aim >90%)
+```
+
+### Edge Cases
+
+- Missing `frozen_string_literal: true` → RuboCop error
+- Method length >15 lines → RuboCop Metrics/MethodLength offense
+- ABC complexity >20 → RuboCop Metrics/AbcSize offense
+- Missing class/module documentation → RuboCop Style/Documentation offense
+- Debugger statement (`binding.pry`) → RuboCop Lint/Debugger offense
+
+### Failure Modes
+
+- **Long method**: 15 行超過 → Metrics/MethodLength offense
+- **High complexity**: ABC >20 → Metrics/AbcSize offense
+- **Missing doc**: class without comment → Style/Documentation offense
+- **Variable naming**: camelCase 変数 → Naming/VariableNumber offense
+
+### Failure Triggers (Halt Generation)
+
+> **Source**: Integrated from github/awesome-copilot prompt.instructions.md Quality Assurance Checklist
+
+Generation must halt immediately if any of the following occur:
+
+1. **Input Validation Failures** (after 2 retry attempts):
+
+   - gem_name still invalid after clarification
+   - tool_name empty or invalid after correction
+   - prompt_name remains semantically meaningless
+
+2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
+   - rubocop run exits with >0 offenses
+
+3. **Type Safety Violations** (no retries, immediate halt):
+
+   - long method, high complexity, missing doc, variable naming
+
+4. **Tool Access Denied** (no retries):
+
+   - search/codebase permission denied
+   - edit/createFile fails due to file system restrictions
+   - runCommands blocked by security policy
+
+5. **Test Failures** (after 3 fix attempts):
+
+   - rspec exits with non-zero code
+   - Coverage below threshold
+   - Timeout errors (tests exceed 30s per suite)
+
+6. **Validation Command Failures** (3 consecutive failures):
+   - bundle install fails
+   - rubocop -a reports offenses after auto-fix
+
+**Error Reporting Format**:
+
+```markdown
+❌ **Generation Halted**
+
+**Reason**: [Failure Trigger Category]
+**Details**: [Specific error message with file:line references]
+**Attempted Fixes**: [List of auto-fix commands executed]
+**Manual Action Required**: [Step-by-step resolution guide]
+
+**Context**:
+
+- Input: gem_name="${gem_name}", tool_name="${tool_name}", prompt_name="${prompt_name}"
+- Retry Count: X/3
+```
+
+**Success Criteria** (all must pass):
+
+- [ ] All input validations passed
+- [ ] Lint errors = 0
+- [ ] Tests pass
+- [ ] rubocop -a reports no offenses
+- [ ] No long method, high complexity, missing doc, variable naming
+- [ ] All error cases covered in tests
 
 ## Project Structure
 

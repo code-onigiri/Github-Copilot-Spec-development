@@ -1,0 +1,9 @@
+deny = [
+  "clippy::pedantic",
+  "clippy::nursery",
+  "clippy::unwrap_used",
+  "clippy::expect_used",
+  "clippy::wildcard_imports",
+  "clippy::todo",
+  "clippy::uninlined_format_args"
+]
