@@ -41,7 +41,39 @@ This framework provides:
 
 ### Installation
 
-Clone the repository and run the installation script in your project:
+#### Option 1: CLI Tool (Recommended)
+
+The modern CLI tool provides an easy and interactive way to install:
+
+```bash
+# Navigate to your project directory
+cd your-project
+
+# Clone the framework
+git clone https://github.com/code-onigiri/Github-Copilot-Spec-development.git
+
+# Install using the CLI tool
+cd Github-Copilot-Spec-development/cli
+npm install
+npm run build
+node dist/index.js install
+```
+
+Or install interactively with custom options:
+
+```bash
+# Install with defaults
+node dist/index.js install -y
+
+# Install to specific directory
+node dist/index.js install -d /path/to/project -n "My Project"
+```
+
+See [CLI Documentation](cli/README.md) for more details.
+
+#### Option 2: Bash Script (Legacy)
+
+You can still use the traditional bash script:
 
 ```bash
 # Navigate to your project directory
