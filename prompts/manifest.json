@@ -1,108 +1,121 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "title": "Model Context Protocol Server Generator Prompts Manifest",
-  "schemaVersion": "2.0.0",
-  "generated": "2025-11-12T05:30:57.588567Z",
+  "title": "Language-Specific Coding Best Practices and Rules",
+  "schemaVersion": "3.0.0",
+  "generated": "2025-11-12T08:48:00.000000Z",
   "metadata": {
-    "total_prompts": 9,
-    "total_lines": 4117,
-    "generated_by": "AI-managed manifest"
+    "total_languages": 9,
+    "generated_by": "AI-managed manifest",
+    "description": "Language-specific coding best practices and industry-standard rules for functional and efficient code development"
+  },
+  "structure": {
+    "description": "Each language has its own directory with two prompt files",
+    "files": {
+      "code.prompts.md": "Best practices for writing functional and efficient code",
+      "rule.prompts.md": "Industry-standard coding rules and conventions"
+    }
   },
   "languages": [
     {
-      "language": "csharp",
-      "displayName": "C#",
-      "prompts": [
-        "prompt-for-csharp.prompt.md"
-      ],
-      "lines": 483,
-      "description": ""
-    },
-    {
-      "language": "go",
-      "displayName": "Go",
-      "prompts": [
-        "prompt-for-go.prompt.md"
-      ],
-      "lines": 407,
-      "description": ""
-    },
-    {
-      "language": "java",
-      "displayName": "Java",
-      "prompts": [
-        "prompt-for-java.prompt.md"
-      ],
-      "lines": 454,
-      "description": ""
-    },
-    {
-      "language": "kotlin",
-      "displayName": "Kotlin",
-      "prompts": [
-        "prompt-for-kotlin.prompt.md"
-      ],
-      "lines": 450,
-      "description": ""
-    },
-    {
-      "language": "php",
-      "displayName": "PHP",
-      "prompts": [
-        "prompt-for-php.prompt.md"
-      ],
-      "lines": 439,
-      "description": ""
-    },
-    {
-      "language": "ruby",
-      "displayName": "Ruby",
-      "prompts": [
-        "prompt-for-ruby.prompt.md"
-      ],
-      "lines": 471,
-      "description": ""
-    },
-    {
       "language": "rust",
       "displayName": "Rust",
+      "directory": "rust/",
       "prompts": [
-        "prompt-for-rust.prompt.md"
+        "rust/code.prompts.md",
+        "rust/rule.prompts.md"
       ],
-      "lines": 409,
-      "description": ""
-    },
-    {
-      "language": "swift",
-      "displayName": "Swift",
-      "prompts": [
-        "prompt-for-swift.prompt.md"
-      ],
-      "lines": 485,
-      "description": ""
+      "description": "Systems programming with memory safety and zero-cost abstractions"
     },
     {
       "language": "typescript",
       "displayName": "TypeScript",
+      "directory": "typescript/",
       "prompts": [
-        "prompt-for-typescript.prompt.md"
+        "typescript/code.prompts.md",
+        "typescript/rule.prompts.md"
       ],
-      "lines": 519,
-      "description": ""
+      "description": "Type-safe JavaScript for scalable applications"
+    },
+    {
+      "language": "go",
+      "displayName": "Go",
+      "directory": "go/",
+      "prompts": [
+        "go/code.prompts.md",
+        "go/rule.prompts.md"
+      ],
+      "description": "Simple, fast, and reliable software with built-in concurrency"
+    },
+    {
+      "language": "java",
+      "displayName": "Java",
+      "directory": "java/",
+      "prompts": [
+        "java/code.prompts.md",
+        "java/rule.prompts.md"
+      ],
+      "description": "Enterprise-grade object-oriented programming"
+    },
+    {
+      "language": "csharp",
+      "displayName": "C#",
+      "directory": "csharp/",
+      "prompts": [
+        "csharp/code.prompts.md",
+        "csharp/rule.prompts.md"
+      ],
+      "description": "Modern, type-safe language for .NET ecosystem"
+    },
+    {
+      "language": "ruby",
+      "displayName": "Ruby",
+      "directory": "ruby/",
+      "prompts": [
+        "ruby/code.prompts.md",
+        "ruby/rule.prompts.md"
+      ],
+      "description": "Dynamic, elegant language optimized for developer happiness"
+    },
+    {
+      "language": "php",
+      "displayName": "PHP",
+      "directory": "php/",
+      "prompts": [
+        "php/code.prompts.md",
+        "php/rule.prompts.md"
+      ],
+      "description": "Server-side scripting for web applications"
+    },
+    {
+      "language": "swift",
+      "displayName": "Swift",
+      "directory": "swift/",
+      "prompts": [
+        "swift/code.prompts.md",
+        "swift/rule.prompts.md"
+      ],
+      "description": "Modern, safe, and fast language for Apple platforms"
+    },
+    {
+      "language": "kotlin",
+      "displayName": "Kotlin",
+      "directory": "kotlin/",
+      "prompts": [
+        "kotlin/code.prompts.md",
+        "kotlin/rule.prompts.md"
+      ],
+      "description": "Concise, safe, and interoperable language for JVM and Android"
     }
   ],
-  "lint": {
-    "repository_path": "../lint/",
-    "auto_installer": "../scripts/install-lint-config.sh",
-    "usage": "scripts/install-lint-config.sh {language} [--repo-path PATH]"
-  },
-  "ai_agent_workflow": [
-    "1. User requests server generation for language X",
-    "2. Read prompts/{language}-prompts prompt files",
-    "3. Run scripts/install-lint-config.sh {language} --repo-path .",
-    "4. Generate code following prompt Inputs/Workflow/Output structure",
-    "5. Run lint commands with cli_flags from manifest",
-    "6. Validate against Validation section requirements",
-    "7. Commit if all checks pass (zero errors/warnings)"
-  ]
+  "usage": {
+    "purpose": "These prompts help developers write functional, efficient, and maintainable code",
+    "best_practices": "code.prompts.md files contain language-specific best practices and patterns",
+    "coding_rules": "rule.prompts.md files enforce industry-standard conventions and quality checks",
+    "ai_workflow": [
+      "1. When working with a specific language, consult the language directory",
+      "2. Use code.prompts.md for best practices and efficient coding patterns",
+      "3. Use rule.prompts.md for style guides, linting rules, and quality standards",
+      "4. Follow both prompts to ensure high-quality, maintainable code"
+    ]
+  }
 }
