@@ -4,7 +4,7 @@
   "schemaVersion": "3.0.0",
   "generated": "2025-11-12T08:48:00.000000Z",
   "metadata": {
-    "total_languages": 9,
+    "total_languages": 13,
     "generated_by": "AI-managed manifest",
     "description": "Language-specific coding best practices and industry-standard rules for functional and efficient code development"
   },
@@ -20,91 +20,92 @@
       "language": "rust",
       "displayName": "Rust",
       "directory": "rust/",
-      "prompts": [
-        "rust/code.prompts.md",
-        "rust/rule.prompts.md"
-      ],
+      "prompts": ["rust/code.prompts.md", "rust/rule.prompts.md"],
       "description": "Systems programming with memory safety and zero-cost abstractions"
     },
     {
       "language": "typescript",
       "displayName": "TypeScript",
       "directory": "typescript/",
-      "prompts": [
-        "typescript/code.prompts.md",
-        "typescript/rule.prompts.md"
-      ],
+      "prompts": ["typescript/code.prompts.md", "typescript/rule.prompts.md"],
       "description": "Type-safe JavaScript for scalable applications"
     },
     {
       "language": "go",
       "displayName": "Go",
       "directory": "go/",
-      "prompts": [
-        "go/code.prompts.md",
-        "go/rule.prompts.md"
-      ],
+      "prompts": ["go/code.prompts.md", "go/rule.prompts.md"],
       "description": "Simple, fast, and reliable software with built-in concurrency"
     },
     {
       "language": "java",
       "displayName": "Java",
       "directory": "java/",
-      "prompts": [
-        "java/code.prompts.md",
-        "java/rule.prompts.md"
-      ],
+      "prompts": ["java/code.prompts.md", "java/rule.prompts.md"],
       "description": "Enterprise-grade object-oriented programming"
     },
     {
       "language": "csharp",
       "displayName": "C#",
       "directory": "csharp/",
-      "prompts": [
-        "csharp/code.prompts.md",
-        "csharp/rule.prompts.md"
-      ],
+      "prompts": ["csharp/code.prompts.md", "csharp/rule.prompts.md"],
       "description": "Modern, type-safe language for .NET ecosystem"
     },
     {
       "language": "ruby",
       "displayName": "Ruby",
       "directory": "ruby/",
-      "prompts": [
-        "ruby/code.prompts.md",
-        "ruby/rule.prompts.md"
-      ],
+      "prompts": ["ruby/code.prompts.md", "ruby/rule.prompts.md"],
       "description": "Dynamic, elegant language optimized for developer happiness"
     },
     {
       "language": "php",
       "displayName": "PHP",
       "directory": "php/",
-      "prompts": [
-        "php/code.prompts.md",
-        "php/rule.prompts.md"
-      ],
+      "prompts": ["php/code.prompts.md", "php/rule.prompts.md"],
       "description": "Server-side scripting for web applications"
     },
     {
       "language": "swift",
       "displayName": "Swift",
       "directory": "swift/",
-      "prompts": [
-        "swift/code.prompts.md",
-        "swift/rule.prompts.md"
-      ],
+      "prompts": ["swift/code.prompts.md", "swift/rule.prompts.md"],
       "description": "Modern, safe, and fast language for Apple platforms"
     },
     {
       "language": "kotlin",
       "displayName": "Kotlin",
       "directory": "kotlin/",
-      "prompts": [
-        "kotlin/code.prompts.md",
-        "kotlin/rule.prompts.md"
-      ],
+      "prompts": ["kotlin/code.prompts.md", "kotlin/rule.prompts.md"],
       "description": "Concise, safe, and interoperable language for JVM and Android"
+    },
+    {
+      "language": "cpp",
+      "displayName": "C++",
+      "directory": "cpp/",
+      "prompts": ["cpp/code.prompts.md", "cpp/rule.prompts.md"],
+      "description": "High-performance systems programming with RAII and zero-cost abstractions"
+    },
+    {
+      "language": "python",
+      "displayName": "Python",
+      "directory": "python/",
+      "prompts": ["python/code.prompts.md", "python/rule.prompts.md"],
+      "description": "Readable, batteries-included language for rapid development"
+    },
+    {
+      "language": "dart",
+      "displayName": "Dart",
+      "directory": "dart/",
+      "prompts": ["dart/code.prompts.md", "dart/rule.prompts.md"],
+      "description": "Optimized for client apps with sound null safety"
+    },
+    {
+      "language": "scala",
+      "displayName": "Scala",
+      "directory": "scala/",
+      "prompts": ["scala/code.prompts.md", "scala/rule.prompts.md"],
+      "description": "Functional and object-oriented language for the JVM"
     }
   ],
   "usage": {

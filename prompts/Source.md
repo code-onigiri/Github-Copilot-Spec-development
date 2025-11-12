@@ -10,26 +10,49 @@ Where content has been derived from or inspired by external sources, those sourc
 
 ## Language-Specific Sources
 
+### C++
+
+#### Best Practices Sources
+
+- **[C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/)**
+
+  - License: CC BY-NC-SA 4.0 (referenced only)
+  - Used for: Resource management (RAII), ownership, modern C++ idioms
+
+- **[cppreference](https://en.cppreference.com/w/)**
+  - License: CC BY-SA 3.0
+  - Used for: Standard library reference and examples
+
+#### Coding Rules Sources
+
+- **[Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)**
+
+  - License: CC BY 3.0
+  - Used for: Naming, formatting, include ordering
+
+- **[clang-tidy Documentation](https://clang.llvm.org/extra/clang-tidy/)**
+  - License: Apache License 2.0 with LLVM exceptions (tools)
+  - Used for: Static analysis checks and configurations
+
 ### Rust
 
 #### Best Practices Sources
+
 - **[The Rust Programming Language Book](https://doc.rust-lang.org/book/)** (Official Rust Documentation)
   - License: MIT/Apache-2.0
   - Used for: Core principles, ownership/borrowing concepts
-  
 - **[Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)**
   - License: MIT/Apache-2.0
   - Used for: API design patterns, naming conventions
-  
 - **[Rust Performance Book](https://nnethercote.github.io/perf-book/)**
   - License: MIT/Apache-2.0
   - Used for: Performance optimization techniques
 
 #### Coding Rules Sources
+
 - **[Rust Style Guide](https://doc.rust-lang.org/beta/style-guide/)**
   - License: MIT/Apache-2.0
   - Used for: Official formatting and style conventions
-  
 - **[Clippy Documentation](https://doc.rust-lang.org/clippy/)**
   - License: MIT/Apache-2.0
   - Used for: Linting rules and best practices
@@ -37,20 +60,20 @@ Where content has been derived from or inspired by external sources, those sourc
 ### TypeScript
 
 #### Best Practices Sources
+
 - **[TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)**
   - License: Apache License 2.0
   - Used for: Type system features, patterns
-  
 - **[TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)**
   - Author: Basarat Ali Syed
   - License: CC BY 4.0
   - Used for: Advanced TypeScript patterns
 
 #### Coding Rules Sources
+
 - **[Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)**
   - License: CC-By 3.0
   - Used for: Style conventions, naming rules
-  
 - **[ESLint TypeScript Plugin](https://typescript-eslint.io/)**
   - License: BSD-2-Clause
   - Used for: Linting rules and configurations
@@ -58,19 +81,19 @@ Where content has been derived from or inspired by external sources, those sourc
 ### Go
 
 #### Best Practices Sources
+
 - **[Effective Go](https://golang.org/doc/effective_go)**
   - License: BSD-3-Clause
   - Used for: Idiomatic Go patterns
-  
 - **[Go Proverbs](https://go-proverbs.github.io/)**
   - Author: Rob Pike
   - Used for: Go philosophy and principles
 
 #### Coding Rules Sources
+
 - **[Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments)**
   - License: BSD-3-Clause
   - Used for: Code review guidelines
-  
 - **[Uber Go Style Guide](https://github.com/uber-go/guide/blob/master/style.md)**
   - License: Apache License 2.0
   - Used for: Industry best practices
@@ -78,19 +101,19 @@ Where content has been derived from or inspired by external sources, those sourc
 ### Java
 
 #### Best Practices Sources
+
 - **[Effective Java (3rd Edition)](https://www.oreilly.com/library/view/effective-java-3rd/9780134686097/)**
   - Author: Joshua Bloch
   - Reference: Industry-standard patterns (not copied)
-  
 - **[Oracle Java Documentation](https://docs.oracle.com/javase/)**
   - License: Oracle proprietary (referenced only)
   - Used for: Official API documentation
 
 #### Coding Rules Sources
+
 - **[Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)**
   - License: CC-By 3.0
   - Used for: Style conventions
-  
 - **[Java Code Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-contents.html)**
   - License: Oracle proprietary (referenced only)
   - Used for: Official coding standards
@@ -98,19 +121,19 @@ Where content has been derived from or inspired by external sources, those sourc
 ### C#
 
 #### Best Practices Sources
+
 - **[C# Programming Guide](https://docs.microsoft.com/en-us/dotnet/csharp/)**
   - License: CC BY 4.0
   - Used for: Language features, patterns
-  
 - **[.NET API Design Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/)**
   - License: CC BY 4.0
   - Used for: API design patterns
 
 #### Coding Rules Sources
+
 - **[C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)**
   - License: CC BY 4.0
   - Used for: Official style guide
-  
 - **[StyleCop Rules](https://github.com/DotNetAnalyzers/StyleCopAnalyzers)**
   - License: MIT
   - Used for: Linting rules
@@ -118,19 +141,19 @@ Where content has been derived from or inspired by external sources, those sourc
 ### Ruby
 
 #### Best Practices Sources
+
 - **[The Ruby Programming Language](https://www.ruby-lang.org/en/documentation/)**
   - License: Ruby License / BSD-2-Clause
   - Used for: Core language features
-  
 - **[Eloquent Ruby](https://www.oreilly.com/library/view/eloquent-ruby/9780321700308/)**
   - Author: Russ Olsen
   - Reference: Industry patterns (not copied)
 
 #### Coding Rules Sources
+
 - **[Ruby Style Guide](https://rubystyle.guide/)**
   - License: CC BY 3.0
   - Used for: Community style standards
-  
 - **[Rails Style Guide](https://rails.rubystyle.guide/)**
   - License: CC BY 3.0
   - Used for: Rails-specific conventions
@@ -138,19 +161,19 @@ Where content has been derived from or inspired by external sources, those sourc
 ### PHP
 
 #### Best Practices Sources
+
 - **[PHP: The Right Way](https://phptherightway.com/)**
   - License: CC BY-NC-SA 3.0
   - Used for: Modern PHP practices
-  
 - **[Modern PHP](https://www.oreilly.com/library/view/modern-php/9781491905173/)**
   - Author: Josh Lockhart
   - Reference: Industry patterns (not copied)
 
 #### Coding Rules Sources
+
 - **[PSR-12: Extended Coding Style](https://www.php-fig.org/psr/psr-12/)**
   - License: MIT
   - Used for: Official PHP-FIG standards
-  
 - **[PHP CS Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer)**
   - License: MIT
   - Used for: Formatting rules
@@ -158,19 +181,19 @@ Where content has been derived from or inspired by external sources, those sourc
 ### Swift
 
 #### Best Practices Sources
+
 - **[Swift Programming Language](https://docs.swift.org/swift-book/)**
   - License: Apache License 2.0
   - Used for: Language features, patterns
-  
 - **[Swift Evolution](https://github.com/apple/swift-evolution)**
   - License: Apache License 2.0
   - Used for: Modern Swift features
 
 #### Coding Rules Sources
+
 - **[Swift API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)**
   - License: Apache License 2.0
   - Used for: Official design guidelines
-  
 - **[Ray Wenderlich Swift Style Guide](https://github.com/raywenderlich/swift-style-guide)**
   - License: MIT
   - Used for: Community conventions
@@ -178,26 +201,104 @@ Where content has been derived from or inspired by external sources, those sourc
 ### Kotlin
 
 #### Best Practices Sources
+
 - **[Kotlin Documentation](https://kotlinlang.org/docs/home.html)**
   - License: Apache License 2.0
   - Used for: Language features
-  
 - **[Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-guide.html)**
   - License: Apache License 2.0
   - Used for: Async patterns
 
 #### Coding Rules Sources
+
 - **[Kotlin Coding Conventions](https://kotlinlang.org/docs/coding-conventions.html)**
   - License: Apache License 2.0
   - Used for: Official style guide
-  
 - **[Android Kotlin Style Guide](https://developer.android.com/kotlin/style-guide)**
   - License: CC BY 2.5
   - Used for: Android-specific conventions
 
+### Python
+
+#### Best Practices Sources
+
+- **[Python Documentation](https://docs.python.org/3/)**
+
+  - License: PSF License
+  - Used for: Language features, standard library usage
+
+- **[The Zen of Python (PEP 20)](https://peps.python.org/pep-0020/)**
+  - License: PSF License
+  - Used for: Design principles
+
+#### Coding Rules Sources
+
+- **[PEP 8 – Style Guide for Python Code](https://peps.python.org/pep-0008/)**
+
+  - License: PSF License
+  - Used for: Official style guidelines
+
+- **[Black](https://github.com/psf/black)**
+
+  - License: MIT
+  - Used for: Code formatting
+
+- **[Ruff](https://github.com/astral-sh/ruff)**
+  - License: MIT
+  - Used for: Linting and static analysis
+
+### Dart
+
+#### Best Practices Sources
+
+- **[Dart Language Tour](https://dart.dev/language)**
+
+  - License: BSD-3-Clause
+  - Used for: Language features and idioms
+
+- **[Effective Dart](https://dart.dev/effective-dart)**
+  - License: BSD-3-Clause
+  - Used for: Style, documentation, usage recommendations
+
+#### Coding Rules Sources
+
+- **[Dart Analyzer](https://dart.dev/tools/analysis)**
+
+  - License: BSD-3-Clause
+  - Used for: Lints and static analysis configuration
+
+- **[package:lints](https://pub.dev/packages/lints)**
+  - License: BSD-3-Clause
+  - Used for: Recommended lint rules
+
+### Scala
+
+#### Best Practices Sources
+
+- **[Scala Documentation](https://docs.scala-lang.org/)**
+  - License: Apache License 2.0
+  - Used for: Language features, collections, concurrency
+
+#### Coding Rules Sources
+
+- **[Scala Style Guide](https://docs.scala-lang.org/style/)**
+
+  - License: CC BY 3.0
+  - Used for: Style conventions and recommendations
+
+- **[Scalafmt](https://scalameta.org/scalafmt/)**
+
+  - License: Apache License 2.0
+  - Used for: Code formatting
+
+- **[Scalafix](https://scalacenter.github.io/scalafix/)**
+  - License: Apache License 2.0
+  - Used for: Rewrite and lint rules
+
 ## General References
 
 ### Testing Frameworks
+
 - **JUnit 5** (Java) - Eclipse Public License 2.0
 - **xUnit** (C#) - Apache License 2.0
 - **RSpec** (Ruby) - MIT License
@@ -206,6 +307,7 @@ Where content has been derived from or inspired by external sources, those sourc
 - **Vitest/Jest** (TypeScript) - MIT License
 
 ### Linting Tools
+
 - **Clippy** (Rust) - MIT/Apache-2.0
 - **ESLint** (TypeScript) - MIT License
 - **golangci-lint** (Go) - GPL-3.0
@@ -223,6 +325,7 @@ All content in this directory has been synthesized from publicly available docum
 ### Original Content
 
 The following aspects are original to this project:
+
 - Organization and structure of the prompts
 - Synthesis and integration of multiple sources
 - Language-agnostic framework for prompt organization
@@ -241,6 +344,7 @@ When adding new content or updating existing prompts:
 ## License Compatibility
 
 All referenced sources have licenses that are compatible with this project's MIT License:
+
 - **MIT License**: Direct compatibility
 - **Apache License 2.0**: Compatible with MIT
 - **BSD Licenses**: Compatible with MIT
@@ -250,6 +354,7 @@ All referenced sources have licenses that are compatible with this project's MIT
 ## Updates
 
 This file should be updated whenever:
+
 - New language prompts are added
 - Significant content is adapted from new sources
 - References are updated or changed
