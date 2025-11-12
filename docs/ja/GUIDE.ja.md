@@ -1,194 +1,194 @@
-# GitHub Copilot Spec Driven Development - Full Guide
+# GitHub Copilot 仕様駆動開発 - 完全ガイド
 
-## 📖 1. Introduction
+## 📖 1. はじめに
 
-This project provides a systematic Spec-Driven Development (SDD) environment designed to maximize the capabilities of **GitHub Copilot**. It is inspired by [spec-kit](https://github.com/github/spec-kit) and fully integrates with GitHub Copilot's latest customization features.
+このプロジェクトは、**GitHub Copilot** の能力を最大限に引き出すために設計された、体系的な仕様駆動開発(SDD)環境を提供します。[spec-kit](https://github.com/github/spec-kit) にインスパイアされ、GitHub Copilot の最新のカスタマイズ機能と完全に統合されています。
 
-The core development workflow is: **`Specify`** → **`Plan`** → **`Tasks`** → **`Implement`**.
+コアとなる開発ワークフローは: **`仕様化`** → **`計画`** → **`タスク`** → **`実装`** です。
 
-This guide explains the step-by-step process for developing software using this framework.
+このガイドでは、このフレームワークを使用してソフトウェアを開発するための段階的なプロセスを説明します。
 
 ---
 
-## 🚀 2. Getting Started
+## 🚀 2. はじめに
 
-### Prerequisites
+### 前提条件
 
-- GitHub Copilot License
-- Visual Studio Code with the GitHub Copilot extension
+- GitHub Copilot ライセンス
+- GitHub Copilot 拡張機能がインストールされた Visual Studio Code
 - Git
 
-### Setup
+### セットアップ
 
-1. **Install the framework** into your project directory.
+1. **フレームワークをインストール** します。
 
    ```bash
-   # Navigate to your existing project or create a new one
+   # 既存のプロジェクトに移動するか、新しいプロジェクトを作成します
    cd your-project
 
-   # Run the installer
-   curl -fsSL https://raw.githubusercontent.com/code-onigiri/Github-Copilot-Spec-development/main/scripts/quick-install.sh | bash
+   # インストーラーを実行します
+   curl -fsSL https://raw.githubusercontent.com/code-onigiri/Github-Copilot-Spec-development/main/scripts/install.sh | bash
    ```
 
-2. **Open the project** in VS Code.
+2. **VS Code でプロジェクトを開きます**。
 
    ```bash
    code .
    ```
 
-   VS Code will recommend installing the necessary extensions defined in `.vscode/extensions.json`.
+   VS Code は `.vscode/extensions.json` で定義されている必要な拡張機能のインストールを推奨します。
 
 ---
 
-## workflow 3. Core Development Workflow
+## 🔄 3. コア開発ワークフロー
 
-The development process is divided into four main phases. You will use dedicated commands (e.g., `/ikak:specify`) in the VS Code chat to proceed through each phase.
+開発プロセスは 4 つの主要なフェーズに分かれています。VS Code チャットで専用のコマンド(例: `/ikak:specify`)を使用して各フェーズを進めます。
 
-### Phase 0: Define the Project Constitution (First Time Only)
+### フェーズ 0: プロジェクト憲章の定義(初回のみ)
 
-Before starting development, you must define the project's core principles.
+開発を開始する前に、プロジェクトの中核となる原則を定義する必要があります。
 
-- **Command**: `/ikak:constitution`
-- **Purpose**: To establish consistent rules and guidelines for the project.
-- **Process**: You will be prompted to define:
-  - Project goals
-  - Development principles (e.g., Simplicity, TDD)
-  - Quality gates
-- **Output**: `memory/constitution.md`
+- **コマンド**: `/ikak:constitution`
+- **目的**: プロジェクトの一貫したルールとガイドラインを確立します。
+- **プロセス**: 以下の定義を求められます:
+  - プロジェクトのゴール
+  - 開発原則(例: シンプルさ、TDD)
+  - 品質ゲート
+- **出力**: `memory/constitution.md`
 
-### Phase 1: Specify the Feature
+### フェーズ 1: 機能の仕様化
 
-Start by creating a detailed specification for the feature you want to build.
+構築したい機能の詳細な仕様を作成することから始めます。
 
-- **Command**: `/ikak:specify [description]`
-- **Example**: `/ikak:specify A user authentication system with email/password login.`
-- **Purpose**: To clearly define the feature's requirements, user stories, and acceptance criteria.
-- **Process**:
-  1.  Copilot analyzes your description.
-  2.  It generates a structured specification document based on a template.
-- **Output**: `specs/[###-feature-name]/spec.md`
+- **コマンド**: `/ikak:specify [説明]`
+- **例**: `/ikak:specify メール/パスワードログイン機能を持つユーザー認証システム`
+- **目的**: 機能の要件、ユーザーストーリー、受け入れ基準を明確に定義します。
+- **プロセス**:
+  1.  Copilot があなたの説明を分析します。
+  2.  テンプレートに基づいて構造化された仕様書を生成します。
+- **出力**: `specs/[###-機能名]/spec.md`
 
-### Phase 2: Generate an Implementation Plan
+### フェーズ 2: 実装計画の生成
 
-Once the specification is clear, create a technical plan for implementation.
+仕様が明確になったら、実装のための技術計画を作成します。
 
-- **Command**: `/ikak:plan [technical-details]`
-- **Example**: `/ikak:plan Use Python with FastAPI and PostgreSQL. Use JWT for auth.`
-- **Purpose**: To design the architecture, data models, and API contracts.
-- **Process**:
-  1.  Copilot reads the `spec.md`.
-  2.  It designs a technical solution based on your input and the specification.
-- **Outputs**:
-  - `plan.md`: The overall implementation strategy.
-  - `data-model.md`: Database schemas and data structures.
-  - `contracts/`: API endpoint definitions.
-  - `research.md`: Investigation of technical questions.
+- **コマンド**: `/ikak:plan [技術詳細]`
+- **例**: `/ikak:plan Python と FastAPI、PostgreSQL を使用。認証には JWT を使用。`
+- **目的**: アーキテクチャ、データモデル、API 契約を設計します。
+- **プロセス**:
+  1.  Copilot が `spec.md` を読み込みます。
+  2.  あなたの入力と仕様に基づいて技術的なソリューションを設計します。
+- **出力**:
+  - `plan.md`: 全体的な実装戦略
+  - `data-model.md`: データベーススキーマとデータ構造
+  - `contracts/`: API エンドポイント定義
+  - `research.md`: 技術的な質問の調査
 
-### Phase 3: Break Down into Tasks
+### フェーズ 3: タスクへの分解
 
-Decompose the implementation plan into small, actionable tasks.
+実装計画を小さな実行可能なタスクに分解します。
 
-- **Command**: `/ikak:tasks`
-- **Purpose**: To create a checklist of coding tasks.
-- **Process**: Copilot analyzes `plan.md` and related documents to generate a task list.
-- **Output**: `specs/[###-feature-name]/tasks.md`
-  - Each task has a unique ID (e.g., `[T001]`) and targets a specific file.
+- **コマンド**: `/ikak:tasks`
+- **目的**: コーディングタスクのチェックリストを作成します。
+- **プロセス**: Copilot が `plan.md` と関連ドキュメントを分析してタスクリストを生成します。
+- **出力**: `specs/[###-機能名]/tasks.md`
+  - 各タスクには一意の ID (例: `[T001]`) があり、特定のファイルをターゲットにしています。
 
-### Phase 4: Implement the Code
+### フェーズ 4: コードの実装
 
-Write the code for each task with Copilot's assistance.
+Copilot の支援を受けて各タスクのコードを記述します。
 
-- **Command**: `/ikak:implement [task-id]`
-- **Example**: `/ikak:implement T001`
-- **Purpose**: To write, test, and verify the code for a single task.
-- **Process**:
-  1.  Copilot reads the details of the specified task.
-  2.  It retrieves context from the `spec.md`, `plan.md`, and other relevant documents.
-  3.  It generates the code and corresponding tests.
-  4.  Once complete, the task is marked as done.
+- **コマンド**: `/ikak:implement [タスクID]`
+- **例**: `/ikak:implement T001`
+- **目的**: 単一のタスクのコードを記述、テスト、検証します。
+- **プロセス**:
+  1.  Copilot が指定されたタスクの詳細を読み込みます。
+  2.  `spec.md`、`plan.md`、その他の関連ドキュメントからコンテキストを取得します。
+  3.  コードと対応するテストを生成します。
+  4.  完了したら、タスクを完了としてマークします。
 
 ---
 
-## 🛠️ 4. Other Commands
+## 🛠️ 4. その他のコマンド
 
 ### `/ikak:status`
 
-- **Purpose**: To check the overall progress of the project and the status of each feature.
-- **Displays**:
-  - Completion percentage for each feature.
-  - A list of completed and pending tasks.
-  - Any identified blockers.
+- **目的**: プロジェクト全体の進捗状況と各機能のステータスを確認します。
+- **表示内容**:
+  - 各機能の完了率
+  - 完了済みおよび保留中のタスクのリスト
+  - 特定されたブロッカー
 
-### `/ikak:debug [problem-description]`
+### `/ikak:debug [問題の説明]`
 
-- **Purpose**: To systematically debug and fix issues using the Debug-Driven Fixing (DDF) methodology.
-- **Process**:
-  1.  **Clarify Expectations**: Define the correct behavior.
-  2.  **Visualize Reality**: Gather logs and observe the actual behavior.
-  3.  **Analyze the Gap**: Identify the discrepancy.
-  4.  **Formulate Hypotheses**: List potential root causes.
-  5.  **Test and Fix**: Validate hypotheses and apply a fix.
-
----
-
-## 🎨 5. Advanced Customization
-
-This framework leverages GitHub Copilot's customization features to tailor its behavior to the project's needs. For details on the directory structure and how these files work, see `STRUCTURE.md`.
-
-- **Custom Instructions (`.github/copilot-instructions.md`)**: Provides high-level guidance to Copilot for all interactions.
-- **Path-Specific Instructions (`.github/instructions/`)**: Applies specific rules when working on files in certain directories (e.g., `specs/`).
-- **Custom Chat Modes (`.github/chatmodes/`)**: Creates specialized "personas" for Copilot, such as a `planning` mode or a `review` mode.
-- **Reusable Prompts (`.github/prompts/`)**: Stores complex, multi-step prompts that can be executed with a single click.
-- **VS Code Settings (`.vscode/settings.json`)**: Integrates all customization features into the editor.
+- **目的**: デバッグ駆動修正(DDF)メソドロジーを使用して、問題を体系的にデバッグして修正します。
+- **プロセス**:
+  1.  **期待値の明確化**: 正しい動作を定義します。
+  2.  **現実の可視化**: ログを収集し、実際の動作を観察します。
+  3.  **ギャップの分析**: 不一致を特定します。
+  4.  **仮説の策定**: 潜在的な根本原因をリストアップします。
+  5.  **テストと修正**: 仮説を検証し、修正を適用します。
 
 ---
 
-## 🏛️ 6. Project Structure and Customization
+## 🎨 5. 高度なカスタマイズ
 
-This section details the project's directory structure and how to leverage GitHub Copilot's customization features.
+このフレームワークは、GitHub Copilot のカスタマイズ機能を活用して、プロジェクトのニーズに合わせて動作を調整します。ディレクトリ構造とこれらのファイルの動作の詳細については、`STRUCTURE.md` を参照してください。
 
-### Directory Structure Overview
+- **カスタム指示 (`.github/copilot-instructions.md`)**: すべてのインタラクションに対して Copilot に高レベルのガイダンスを提供します。
+- **パス固有の指示 (`.github/instructions/`)**: 特定のディレクトリ(例: `specs/`)内のファイルで作業する際に特定のルールを適用します。
+- **カスタムチャットモード (`.github/chatmodes/`)**: `planning` モードや `review` モードなど、Copilot の専門的な「ペルソナ」を作成します。
+- **再利用可能なプロンプト (`.github/prompts/`)**: ワンクリックで実行できる複雑なマルチステッププロンプトを保存します。
+- **VS Code 設定 (`.vscode/settings.json`)**: すべてのカスタマイズ機能をエディターに統合します。
 
-The project is organized to support the SDD workflow and provide clear context to GitHub Copilot.
+---
+
+## 🏛️ 6. プロジェクト構造とカスタマイズ
+
+このセクションでは、プロジェクトのディレクトリ構造と GitHub Copilot のカスタマイズ機能の活用方法を詳しく説明します。
+
+### ディレクトリ構造の概要
+
+プロジェクトは SDD ワークフローをサポートし、GitHub Copilot に明確なコンテキストを提供するように構成されています。
 
 ```
 .
-├── .github/         # Copilot customization files
-├── .specify/        # Core framework for SDD commands
-├── memory/          # Project's long-term memory
-├── specs/           # Feature specifications
-└── .vscode/         # VS Code specific settings
+├── .github/         # Copilot カスタマイズファイル
+├── .specify/        # SDD コマンドのコアフレームワーク
+├── memory/          # プロジェクトの長期メモリ
+├── specs/           # 機能仕様
+└── .vscode/         # VS Code 固有の設定
 ```
 
-### `.github/`: Copilot Customization
+### `.github/`: Copilot のカスタマイズ
 
-This directory is central to tailoring Copilot's behavior.
+このディレクトリは Copilot の動作をカスタマイズする中心的な場所です。
 
-- **`copilot-instructions.md`**: Global instructions for Copilot. It sets the overall rules and context for every interaction, ensuring adherence to the SDD workflow.
-- **`chatmodes/`**: Defines specialized "personas" for Copilot. For example, `planning.chatmode.md` configures Copilot to act as a software architect. You can switch modes in the chat view to get more accurate and context-aware responses for specific tasks like planning or reviewing code.
-- **`prompts/`**: Stores complex, reusable prompts. This allows you to execute multi-step, repetitive tasks (like breaking down a plan into tasks) with a single click from the chat interface.
-- **`instructions/`**: Contains instructions that apply only to specific file paths. For instance, you can define rules that are only active when Copilot is working on files within the `specs/` directory, ensuring that all specifications follow a consistent format.
+- **`copilot-instructions.md`**: Copilot のグローバル指示。すべてのインタラクションに対する全体的なルールとコンテキストを設定し、SDD ワークフローへの準拠を確保します。
+- **`chatmodes/`**: Copilot の専門的な「ペルソナ」を定義します。例えば、`planning.chatmode.md` は Copilot をソフトウェアアーキテクトとして動作するように設定します。チャットビューでモードを切り替えて、計画やコードレビューなどの特定のタスクに対してより正確でコンテキストに応じた応答を得ることができます。
+- **`prompts/`**: 複雑で再利用可能なプロンプトを保存します。これにより、チャットインターフェイスからワンクリックで、マルチステップの反復的なタスク(計画をタスクに分解するなど)を実行できます。
+- **`instructions/`**: 特定のファイルパスにのみ適用される指示を含みます。例えば、Copilot が `specs/` ディレクトリ内のファイルで作業している場合にのみアクティブになるルールを定義でき、すべての仕様が一貫した形式に従うことを保証します。
 
-### `memory/`: The Project's Brain
+### `memory/`: プロジェクトの頭脳
 
-This directory acts as the long-term memory for the project, helping Copilot maintain context across sessions. It is structured in three layers:
+このディレクトリはプロジェクトの長期メモリとして機能し、Copilot がセッション間でコンテキストを維持するのを支援します。3 つのレイヤーで構成されています:
 
-1.  **`constitution.md` (Layer 1)**: Contains the immutable, core principles of the project. This is defined once using the `/ikak:constitution` command and rarely changes.
-2.  **`context/` (Layer 2)**: Stores the evolving technical and business context, such as architecture decisions (`architecture.md`) and coding conventions (`conventions.md`). This layer is updated as the project grows.
-3.  **`changelog/` (Layer 3)**: A log of significant decisions and changes, providing a historical record of the project's evolution.
+1.  **`constitution.md` (レイヤー 1)**: プロジェクトの不変のコア原則を含みます。これは `/ikak:constitution` コマンドを使用して一度定義され、ほとんど変更されません。
+2.  **`context/` (レイヤー 2)**: アーキテクチャの決定(`architecture.md`)やコーディング規約(`conventions.md`)など、進化する技術的およびビジネスコンテキストを保存します。このレイヤーはプロジェクトの成長に応じて更新されます。
+3.  **`changelog/` (レイヤー 3)**: 重要な決定と変更のログで、プロジェクトの進化の歴史的記録を提供します。
 
-### `specs/`: Feature Specifications
+### `specs/`: 機能仕様
 
-All feature development begins here. Each feature gets its own subdirectory, which serves as a self-contained module for that feature's lifecycle. A typical feature directory includes:
+すべての機能開発はここから始まります。各機能は独自のサブディレクトリを持ち、その機能のライフサイクルの自己完結型モジュールとして機能します。典型的な機能ディレクトリには以下が含まれます:
 
-- `spec.md`: The initial specification.
-- `plan.md`: The technical implementation plan.
-- `tasks.md`: The checklist of coding tasks.
-- Other documents like `data-model.md` and `contracts/`.
+- `spec.md`: 初期仕様
+- `plan.md`: 技術実装計画
+- `tasks.md`: コーディングタスクのチェックリスト
+- `data-model.md` や `contracts/` などのその他のドキュメント
 
-### `.vscode/`: Editor Integration
+### `.vscode/`: エディター統合
 
-This directory ensures a consistent development environment.
+このディレクトリは一貫した開発環境を保証します。
 
-- **`settings.json`**: Configures VS Code to automatically recognize and use the Copilot customization files in the `.github/` directory.
-- **`extensions.json`**: Recommends VS Code extensions for the project, ensuring all team members have the necessary tools.
+- **`settings.json`**: `.github/` ディレクトリ内の Copilot カスタマイズファイルを自動的に認識して使用するように VS Code を設定します。
+- **`extensions.json`**: プロジェクトの VS Code 拡張機能を推奨し、すべてのチームメンバーが必要なツールを持っていることを保証します。

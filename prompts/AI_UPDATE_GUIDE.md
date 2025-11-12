@@ -5,6 +5,7 @@ This guide helps AI assistants easily update and add content to the language-spe
 ## Quick Reference
 
 ### File Structure
+
 ```
 prompts/
 ├── {language}/
@@ -19,6 +20,7 @@ prompts/
 ## Adding a New Language
 
 ### Step 1: Create Directory
+
 ```bash
 mkdir prompts/{language}
 ```
@@ -27,7 +29,7 @@ mkdir prompts/{language}
 
 Use this template:
 
-```markdown
+````markdown
 # {Language} Best Practices
 
 This prompt provides guidance for writing functional and efficient {Language} code.
@@ -35,6 +37,7 @@ This prompt provides guidance for writing functional and efficient {Language} co
 ## Core Principles
 
 ### {Principle 1}
+
 - Key concept 1
 - Key concept 2
 - Example pattern
@@ -42,13 +45,16 @@ This prompt provides guidance for writing functional and efficient {Language} co
 ```{language}
 // Example code
 ```
+````
 
 ### {Principle 2}
+
 ...
 
 ## Code Organization
 
 ### Project Structure
+
 ```
 project/
   src/
@@ -70,11 +76,13 @@ project/
 ## Performance Optimization
 
 ### {Optimization Technique}
+
 ...
 
 ## Common Patterns
 
 ### {Pattern Name}
+
 ```{language}
 // Implementation
 ```
@@ -82,10 +90,12 @@ project/
 ## Common Pitfalls to Avoid
 
 ### Anti-Patterns
+
 - ❌ {Bad practice}
 - ❌ {Another bad practice}
 
 ### Best Practices
+
 - ✅ {Good practice}
 - ✅ {Another good practice}
 
@@ -93,7 +103,8 @@ project/
 
 - [{Official Docs}]({url})
 - [{Style Guide}]({url})
-```
+
+````
 
 ### Step 3: Create `rule.prompts.md`
 
@@ -116,7 +127,7 @@ Follow [{Official Style Guide}]({url}).
 ### {Formatter Tool} Configuration
 ```{config-format}
 {configuration}
-```
+````
 
 ## Naming Conventions
 
@@ -128,17 +139,20 @@ Follow [{Official Style Guide}]({url}).
 ## Code Quality - {Linter}
 
 ### Required Configuration
+
 ```{config-format}
 {linter configuration}
 ```
 
 ### Forbidden Practices
+
 - ❌ {Practice 1}
 - ❌ {Practice 2}
 
 ## {Category} Standards
 
 ### {Subcategory}
+
 ```{language}
 // ✅ Correct
 {example}
@@ -150,6 +164,7 @@ Follow [{Official Style Guide}]({url}).
 ## Testing Requirements
 
 ### {Test Framework} Standards
+
 - Minimum {X}% code coverage
 - {Other requirements}
 
@@ -160,6 +175,7 @@ Follow [{Official Style Guide}]({url}).
 ## Documentation Standards
 
 ### Required Documentation
+
 ```{language}
 /// {Documentation format}
 ```
@@ -168,7 +184,7 @@ Follow [{Official Style Guide}]({url}).
 
 ```yaml
 # .github/workflows/ci.yml
-{CI configuration}
+{ CI configuration }
 ```
 
 ## Code Review Checklist
@@ -180,9 +196,11 @@ Follow [{Official Style Guide}]({url}).
 ## Enforcement
 
 These rules are enforced through:
+
 1. **{Tool 1}** - {Purpose}
 2. **{Tool 2}** - {Purpose}
-```
+
+````
 
 ### Step 4: Update `manifest.json`
 
@@ -199,7 +217,7 @@ Add entry to the `languages` array:
   ],
   "description": "{Brief description of language purpose}"
 }
-```
+````
 
 ### Step 5: Update `Source.md`
 
@@ -209,15 +227,46 @@ Add attribution section:
 ### {Language}
 
 #### Best Practices Sources
+
 - **[{Source Name}]({url})**
   - License: {license}
   - Used for: {purpose}
 
 #### Coding Rules Sources
+
 - **[{Source Name}]({url})**
   - License: {license}
   - Used for: {purpose}
 ```
+
+### Step 6: Add Lint Configuration Files (Optional but Recommended)
+
+Create configuration files in `lint/{language}/` directory:
+
+**For C++:**
+
+- `.clang-format` - Code formatting rules
+- `.clang-tidy` - Static analysis configuration
+
+**For Python:**
+
+- `pyproject.toml` - Ruff, Black, mypy, pytest configuration
+
+**For Dart:**
+
+- `analysis_options.yaml` - Dart analyzer and linter rules
+
+**For Scala:**
+
+- `.scalafmt.conf` - Code formatting
+- `.scalafix.conf` - Refactoring and linting rules
+
+**General pattern for other languages:**
+
+- Create `lint/{language}/` directory
+- Add the primary linter/formatter configuration files
+- Use the same settings referenced in `rule.prompts.md`
+- Keep configurations production-ready and well-commented
 
 ## Updating Existing Content
 
@@ -323,6 +372,8 @@ Add attribution section:
 
 ### Common Linters by Language
 
+- **C++**: clang-format, clang-tidy
+- **Python**: Ruff, Black, mypy, Flake8
 - **Rust**: clippy, rustfmt
 - **TypeScript**: ESLint, Prettier/Biome
 - **Go**: golangci-lint, gofmt
@@ -332,6 +383,8 @@ Add attribution section:
 - **PHP**: PHP CS Fixer, PHPStan
 - **Swift**: SwiftLint, SwiftFormat
 - **Kotlin**: Detekt, ktlint
+- **Dart**: dart analyze, package:lints
+- **Scala**: Scalafmt, Scalafix
 
 ### Version Standards
 
@@ -344,10 +397,11 @@ Add attribution section:
 
 ### Error Handling Pattern Template
 
-```markdown
+````markdown
 ## Error Handling
 
 ### {Pattern Name}
+
 ```{language}
 // ✅ Correct: {explanation}
 {good_example}
@@ -355,12 +409,15 @@ Add attribution section:
 // ❌ Incorrect: {explanation}
 {bad_example}
 ```
+````
 
 ### Custom Error Types
+
 ```{language}
 {example}
 ```
-```
+
+````
 
 ### Testing Pattern Template
 
@@ -370,13 +427,15 @@ Add attribution section:
 ### {Test Framework}
 ```{language}
 {test_example}
-```
+````
 
 ### Test Organization
+
 - Test file naming: `{pattern}`
 - Test function naming: `{pattern}`
 - Minimum coverage: {percentage}%
-```
+
+````
 
 ## Validation Checklist
 
@@ -397,19 +456,22 @@ Before committing updates:
 ### Count lines in a language's prompts
 ```bash
 wc -l prompts/{language}/*.prompts.md
-```
+````
 
 ### Find all TODOs in prompts
+
 ```bash
 grep -r "TODO\|FIXME" prompts/*/
 ```
 
 ### Validate JSON manifest
+
 ```bash
 jq '.' prompts/manifest.json
 ```
 
 ### Check for broken links
+
 ```bash
 find prompts -name "*.md" -exec grep -H "http" {} \;
 ```
@@ -417,6 +479,7 @@ find prompts -name "*.md" -exec grep -H "http" {} \;
 ## Getting Help
 
 If you need clarification on:
+
 - **Structure**: Read `README.md`
 - **Licenses**: Check `Source.md`
 - **Existing patterns**: Review any language directory
@@ -425,18 +488,21 @@ If you need clarification on:
 ## Maintenance Schedule
 
 ### Monthly
+
 - [ ] Check for updated official documentation
 - [ ] Verify tool versions are current
 - [ ] Test code examples still compile
 - [ ] Review and update deprecated patterns
 
 ### Quarterly
+
 - [ ] Review all external links
 - [ ] Update CI/CD configurations
 - [ ] Check for new language versions
 - [ ] Audit license information
 
 ### Annually
+
 - [ ] Major version updates for tools
 - [ ] Comprehensive content review
 - [ ] Update all code examples
