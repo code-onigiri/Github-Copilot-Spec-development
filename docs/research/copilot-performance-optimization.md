@@ -239,7 +239,7 @@ If any input is ambiguous, use joyride_request_human_input to clarify.
 Before using any tool, declare intent:
 
 - "Searching codebase for existing MCP server patterns..."
-- "Creating file at prompts/${projectName}-mcp-server-generator.prompt.md..."
+- "Creating file at prompts/prompt-for-${projectName}.prompt.md..."
 - "Creating file at prompts/${projectName}-prompts-for-<language>-generator.prompt.md..."
 - "Running lint validation with ${lintTool}..."
 ```

@@ -2,188 +2,93 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "title": "Model Context Protocol Server Generator Prompts Manifest",
   "schemaVersion": "2.0.0",
-  "generated": "2025-11-12T02:40:00Z",
-  "upstream": {
-    "repository": "modelcontextprotocol/awesome-copilot",
-    "commit": "17a3ac59314178f4bf4880681dee7b043687a2c8",
-    "license": "MIT"
-  },
+  "generated": "2025-11-12T05:30:57.588567Z",
   "metadata": {
     "total_prompts": 9,
-    "total_lines": 2507,
-    "enforcement_policy": "Zero warnings, all severities escalated to errors, CI must pass"
+    "total_lines": 4117,
+    "generated_by": "scripts/generate-manifest.py"
   },
   "languages": [
     {
-      "language": "typescript",
-      "displayName": "TypeScript",
-      "prompts": ["typescript-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "18aa915198e894dd4f1bb367e2f3d43666c8e702202a74b8f56d83f45c804a1d",
-      "examples_hash": "8ac088a18c25b3ad5738fb4b33b021878452bac94f7945cdd4ae8a7c346498a5",
-      "lines": 324,
-      "description": "Type-safe server with Zod validation, ESLint/Biome strict linting",
-      "features": [
-        "Zod schema",
-        "ESLint/Biome selectable",
-        "no-any enforcement",
-        "Google TS Style"
+      "language": "csharp",
+      "displayName": "C#",
+      "prompts": [
+        "prompt-for-csharp.prompt.md"
       ],
-      "lint_tools": ["eslint", "biome"],
-      "lint_configs": [".eslintrc.json", "biome.json"],
-      "cli_flags": "--max-warnings=0"
+      "lines": 483,
+      "description": ""
     },
     {
       "language": "go",
       "displayName": "Go",
-      "prompts": ["go-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "a5e6a59af8e98fe7b74e4c29810edce5c779c8772e8cd5255906d703b2b71997",
-      "examples_hash": "a81a1df5742f33ee3010bf9de1bc9e10ff5576ce1c6c81d88e30512170fcc0d3",
-      "lines": 224,
-      "description": "Idiomatic Go server with struct handlers, golangci-lint complexity 10",
-      "features": [
-        "Context propagation",
-        "golangci-lint",
-        "Effective Go style",
-        "Error wrapping"
+      "prompts": [
+        "prompt-for-go.prompt.md"
       ],
-      "lint_tools": ["golangci-lint", "gofmt", "goimports"],
-      "lint_configs": [".golangci.yml"],
-      "cli_flags": ""
-    },
-    {
-      "language": "rust",
-      "displayName": "Rust",
-      "prompts": ["rust-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "8d138720221c630dfddc4f097fa6719a3917ebe34a2a36919eee8790d9bcc3d3",
-      "examples_hash": "aebbe60476294921510023044f47d31dd4a12176624dfea5df0bae9ddcc73a81",
-      "lines": 234,
-      "description": "Safe Rust server with clippy pedantic/nursery deny, no unwrap/expect",
-      "features": [
-        "Result<T, E>",
-        "clippy deny",
-        "tokio async",
-        "No unwrap/expect"
-      ],
-      "lint_tools": ["clippy", "rustfmt"],
-      "lint_configs": ["clippy.toml", "rustfmt.toml"],
-      "cli_flags": "-- -D warnings"
+      "lines": 407,
+      "description": ""
     },
     {
       "language": "java",
       "displayName": "Java",
-      "prompts": ["java-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "4d8a770b178d4100b51e2ea25505ddc10a2a775ce08b71326f81fed3a1e35df6",
-      "examples_hash": "8ac624ae3468ed0f8f4560c528132f7e2a34e9c0d3f9ac864a648f1e72189bbd",
-      "lines": 277,
-      "description": "Java server with Optional, Checkstyle + SpotBugs + Spotless",
-      "features": [
-        "Optional null safety",
-        "Stream API",
-        "Google Java Format",
-        "Javadoc required"
+      "prompts": [
+        "prompt-for-java.prompt.md"
       ],
-      "lint_tools": ["checkstyle", "spotbugs", "spotless"],
-      "lint_configs": ["checkstyle.xml", "spotbugs-exclude.xml"],
-      "cli_flags": ""
+      "lines": 454,
+      "description": ""
     },
     {
       "language": "kotlin",
       "displayName": "Kotlin",
-      "prompts": ["kotlin-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "06711b6d23bcc411868c28a074ba7cf2c5e0782b23e451d94b4a0b5dc6e9f481",
-      "examples_hash": "f5153122f05db10cb0c0217b057d739b7027083dae44b8033942a3ee0f537fbc",
-      "lines": 273,
-      "description": "Kotlin server with sealed classes, coroutines, ktlint + detekt",
-      "features": [
-        "Sealed classes",
-        "Coroutines",
-        "ktlint + detekt",
-        "Complexity 25"
+      "prompts": [
+        "prompt-for-kotlin.prompt.md"
       ],
-      "lint_tools": ["ktlint", "detekt"],
-      "lint_configs": [".editorconfig", "detekt.yml"],
-      "cli_flags": ""
-    },
-    {
-      "language": "swift",
-      "displayName": "Swift",
-      "prompts": ["swift-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "848652f259ffeb4152b633779edebabd71ddce785474f6c2e4d2f809a52b5d75",
-      "examples_hash": "2dd1ba71fe2689186bc125b2d2df0afed72c9126cf626e1a59bee407781b7bec",
-      "lines": 309,
-      "description": "Swift server with Result type, SwiftLint strict + swift-format",
-      "features": [
-        "Result pattern",
-        "async/await",
-        "SwiftLint strict",
-        "Unused detection"
-      ],
-      "lint_tools": ["swiftlint", "swift-format"],
-      "lint_configs": [".swiftlint.yml", ".swift-format"],
-      "cli_flags": "--strict"
-    },
-    {
-      "language": "csharp",
-      "displayName": "C#",
-      "prompts": ["csharp-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "f37ab6f1eaf87f6ebaf800363499443d8f27508b7d741e5e31e851861307b9d2",
-      "examples_hash": "7a856d579b469d45ab748db81bd6f25a6a11332b0ac7fe067a01a501ced53711",
-      "lines": 308,
-      "description": "C# server with async Task, LINQ, Roslyn analyzers all error severity",
-      "features": [
-        "async/await",
-        "LINQ",
-        "Roslyn analyzers",
-        "StyleCop + FxCop"
-      ],
-      "lint_tools": ["dotnet-format", "roslyn-analyzers"],
-      "lint_configs": [".editorconfig"],
-      "cli_flags": "/warnaserror"
-    },
-    {
-      "language": "ruby",
-      "displayName": "Ruby",
-      "prompts": ["ruby-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "10616286da5704b4901f6f593820cd9df9abd37a2490ab0560df527ed36e65c9",
-      "examples_hash": "1c20a357186a5aa01cdae56ff4e406f6081a4dcb142c089ef6f95162a169848d",
-      "lines": 295,
-      "description": "Ruby server with frozen strings, RuboCop strict (MethodLength 15, ABC 20)",
-      "features": [
-        "Frozen literals",
-        "RuboCop strict",
-        "Documentation required",
-        "Naming enforcement"
-      ],
-      "lint_tools": ["rubocop"],
-      "lint_configs": [".rubocop.yml"],
-      "cli_flags": ""
+      "lines": 450,
+      "description": ""
     },
     {
       "language": "php",
       "displayName": "PHP",
-      "prompts": ["php-prompts-for-[]-generator.prompt.md"],
-      "primary": true,
-      "checksum": "f6500e754d968179716cf6f203bb933ed232c795ebf3c02e816ea1a18194b0f5",
-      "examples_hash": "b84fa89afe655a68a4a2186a8b1e0d66ae15ace1934e66a7c9dcbfa029967c86",
-      "lines": 263,
-      "description": "PHP server with strict_types, PSR-12, PHPStan level max",
-      "features": [
-        "strict_types",
-        "PSR-12",
-        "PHPStan max",
-        "Warnings as errors"
+      "prompts": [
+        "prompt-for-php.prompt.md"
       ],
-      "lint_tools": ["phpcs", "phpstan", "phpcbf"],
-      "lint_configs": ["phpcs.xml.dist", "phpstan.neon"],
-      "cli_flags": ""
+      "lines": 439,
+      "description": ""
+    },
+    {
+      "language": "ruby",
+      "displayName": "Ruby",
+      "prompts": [
+        "prompt-for-ruby.prompt.md"
+      ],
+      "lines": 471,
+      "description": ""
+    },
+    {
+      "language": "rust",
+      "displayName": "Rust",
+      "prompts": [
+        "prompt-for-rust.prompt.md"
+      ],
+      "lines": 409,
+      "description": ""
+    },
+    {
+      "language": "swift",
+      "displayName": "Swift",
+      "prompts": [
+        "prompt-for-swift.prompt.md"
+      ],
+      "lines": 485,
+      "description": ""
+    },
+    {
+      "language": "typescript",
+      "displayName": "TypeScript",
+      "prompts": [
+        "prompt-for-typescript.prompt.md"
+      ],
+      "lines": 519,
+      "description": ""
     }
   ],
   "lint": {
@@ -191,9 +96,9 @@
     "auto_installer": "../scripts/install-lint-config.sh",
     "usage": "scripts/install-lint-config.sh {language} [--repo-path PATH]"
   },
-    "ai_agent_workflow": [
+  "ai_agent_workflow": [
     "1. User requests server generation for language X",
-    "2. Read prompts/{language}-prompts-for-[]-generator.prompt.md",
+    "2. Read prompts/{language}-prompts prompt files",
     "3. Run scripts/install-lint-config.sh {language} --repo-path .",
     "4. Generate code following prompt Inputs/Workflow/Output structure",
     "5. Run lint commands with cli_flags from manifest",

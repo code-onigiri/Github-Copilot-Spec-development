@@ -1,4 +1,4 @@
-id: mcp-server-generator
+id: language-prompt
 author: aggregation
 language: ruby
 version: 0.2.0

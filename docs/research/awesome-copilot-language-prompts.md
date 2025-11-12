@@ -36,7 +36,7 @@
   },
   "prompts": [
     {
-      "id": "mcp-server-generator",
+      "id": "language-prompt",
       "title": "MCP Server Generator",
       "intent": "サーバー雛形生成",
       "mission": "Generate a minimal MCP server with tool and prompt registration",
@@ -114,7 +114,7 @@
 | エラー処理     | 検証例外 / null 回避 / 明確メッセージ                                          |
 | パフォーマンス | 非同期 Mono / キャッシュ戦略可能性                                             |
 | テスト         | JUnit: handler 成功 + validation failure                                       |
-| ソース         | `java-mcp-server-generator.prompt.md`                                          |
+| ソース         | `prompt-for-java.prompt.md`                                                    |
 
 ### Go
 
@@ -126,31 +126,31 @@
 | エラー処理     | `error` + sentinel + wrapping 注記                                           |
 | パフォーマンス | goroutine + channel パターン / シンプル計測                                  |
 | テスト         | `go test` table-driven (成功 + エラー)                                       |
-| ソース         | `go-mcp-server-generator.prompt.md`, `go.instructions.md`                    |
+| ソース         | `prompt-for-go.prompt.md`, `go.instructions.md`                              |
 
 ### Rust
 
-| 項目           | 内容                                                                     |
-| -------------- | ------------------------------------------------------------------------ |
-| スタイル       | 明示型 / `Result<T, E>` / Clippy 準拠                                    |
-| MCP            | async trait handler (`list_prompts`, `get_prompt`)                       |
-| プロンプト特徴 | mission 厳格 + 出力 JSON 構造指定多い                                    |
-| エラー処理     | `ErrorData::invalid_params` / `anyhow` オプション                        |
-| パフォーマンス | async/await + minimal allocation                                         |
-| テスト         | `cargo test` (正常 + invalid params)                                     |
-| ソース         | `rust-mcp-server-generator.prompt.md`, `rust-mcp-server.instructions.md` |
+| 項目           | 内容                                                           |
+| -------------- | -------------------------------------------------------------- |
+| スタイル       | 明示型 / `Result<T, E>` / Clippy 準拠                          |
+| MCP            | async trait handler (`list_prompts`, `get_prompt`)             |
+| プロンプト特徴 | mission 厳格 + 出力 JSON 構造指定多い                          |
+| エラー処理     | `ErrorData::invalid_params` / `anyhow` オプション              |
+| パフォーマンス | async/await + minimal allocation                               |
+| テスト         | `cargo test` (正常 + invalid params)                           |
+| ソース         | `prompt-for-rust.prompt.md`, `rust-mcp-server.instructions.md` |
 
 ### C# (.NET)
 
-| 項目           | 内容                                                                          |
-| -------------- | ----------------------------------------------------------------------------- |
-| スタイル       | PascalCase 型/メソッド, async/await, DI パターン                              |
-| MCP            | ジェネレーター prompt: プロジェクト雛形 + handler stub                        |
-| プロンプト特徴 | YAML frontmatter + 目的宣言 + validation 強調                                 |
-| エラー処理     | 例外 + 明確メッセージ + guard clause                                          |
-| パフォーマンス | async/await 非同期 / 構造化ログ                                               |
-| テスト         | xUnit/NUnit minimal (成功 + guard failure)                                    |
-| ソース         | `csharp-mcp-server-generator.prompt.md`, `semantic-kernel-dotnet.chatmode.md` |
+| 項目           | 内容                                                                |
+| -------------- | ------------------------------------------------------------------- |
+| スタイル       | PascalCase 型/メソッド, async/await, DI パターン                    |
+| MCP            | ジェネレーター prompt: プロジェクト雛形 + handler stub              |
+| プロンプト特徴 | YAML frontmatter + 目的宣言 + validation 強調                       |
+| エラー処理     | 例外 + 明確メッセージ + guard clause                                |
+| パフォーマンス | async/await 非同期 / 構造化ログ                                     |
+| テスト         | xUnit/NUnit minimal (成功 + guard failure)                          |
+| ソース         | `prompt-for-csharp.prompt.md`, `semantic-kernel-dotnet.chatmode.md` |
 
 ### Ruby
 
@@ -162,7 +162,7 @@
 | エラー処理     | 例外+メッセージ / statsD 計測時の失敗ログ           |
 | パフォーマンス | 軽量 (I/O 最小) + 計測フック                        |
 | テスト         | RSpec/Minitest minimal (正常 + 例外)                |
-| ソース         | `ruby-mcp-server-generator.prompt.md`               |
+| ソース         | `prompt-for-ruby.prompt.md`                         |
 
 ### PHP
 

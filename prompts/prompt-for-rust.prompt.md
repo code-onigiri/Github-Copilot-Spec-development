@@ -1,5 +1,5 @@
 ---
-id: mcp-server-generator
+id: language-prompt
 author: aggregation
 language: rust
 version: 0.2.0

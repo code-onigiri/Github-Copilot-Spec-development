@@ -1,5 +1,5 @@
 ---
-id: mcp-server-generator
+id: language-prompt
 author: aggregation
 language: typescript
 version: 0.2.0
@@ -36,20 +36,24 @@ last_synced: 2025-11-12T00:00:00Z
 Before generation, validate all inputs and clarify ambiguities:
 
 1. **serverName Validation**:
+
    - Must be non-empty, lowercase, no spaces
    - Pattern: `^[a-z0-9\-]+$` (alphanumeric + hyphens only)
    - If invalid, halt and request valid name with examples
 
 2. **toolNames Validation**:
+
    - Array must contain ≥1 element
    - Each tool name: non-empty, no duplicates, pattern `^[a-zA-Z][a-zA-Z0-9\-]*$`
    - If ambiguous (e.g., "user management" → "user-manager" or "manage-users"?), ask for clarification
 
 3. **promptName Validation**:
+
    - Non-empty, kebab-case preferred
    - If missing semantic meaning (e.g., "test"), request descriptive name
 
 4. **lintTool Selection**:
+
    - Default: `eslint` (if not specified)
    - Validate choice: must be `eslint` or `biome`
    - If user unsure, explain: "ESLint: mature ecosystem, extensive plugins; Biome: faster, all-in-one toolchain"
@@ -67,20 +71,24 @@ Before generation, validate all inputs and clarify ambiguities:
 Before generating code, scan workspace for existing MCP servers and match their patterns:
 
 1. **Search for Existing MCP Servers**:
+
    ```bash
    # Declare intent before tool use
    "Searching workspace for existing MCP server implementations to extract consistent patterns..."
    ```
+
    - Search for: `@modelcontextprotocol/sdk`, `server.ts`, `tools/`, `prompts/` directories
    - If found, analyze: package structure, error handling style, logging approach, test organization
 
 2. **Extract Patterns**:
+
    - **Naming conventions**: camelCase vs kebab-case for tool/prompt names
    - **Error handling**: try-catch blocks, custom error classes, or zod safeParse
    - **Logging**: console.log vs winston/pino, log levels used
-   - **Test organization**: describe blocks, test file naming (*.test.ts vs *.spec.ts)
+   - **Test organization**: describe blocks, test file naming (_.test.ts vs _.spec.ts)
 
 3. **Apply Patterns to New Code**:
+
    - Match existing indentation style (2 spaces, 4 spaces, tabs)
    - Follow existing import ordering (stdlib → external → internal)
    - Use same dependency injection approach (constructor injection, factory functions)
@@ -100,14 +108,17 @@ Before generating code, scan workspace for existing MCP servers and match their 
 Before executing any tool, declare intent with concise statement immediately preceding tool call:
 
 1. **File Search**:
+
    - "Searching workspace for existing TypeScript MCP server patterns..."
    - Tool: `search/codebase` with pattern `**/*.ts` + `@modelcontextprotocol/sdk`
 
 2. **File Creation**:
+
    - "Creating TypeScript MCP server at src/server.ts with tool handlers for: ${toolNames.join(', ')}..."
    - Tool: `edit/createFile` with path `src/server.ts`
 
 3. **Lint Validation**:
+
    - "Running lint validation with ${lintTool} (zero tolerance mode)..."
    - Tool: `runCommands` with `npm run lint -- --max-warnings=0` (ESLint) or `npm run lint` (Biome)
 
@@ -189,26 +200,31 @@ npm run type-check    # tsc --noEmit must pass
 Generation must halt immediately if any of the following occur:
 
 1. **Input Validation Failures** (after 2 retry attempts):
+
    - serverName still contains spaces/uppercase after clarification
    - toolNames array empty or contains duplicates after correction
    - promptName remains semantically meaningless (e.g., "test", "tmp")
 
 2. **Lint Errors Exceed Threshold** (after 3 auto-fix attempts):
+
    - `npm run lint` exits with >0 errors
    - Auto-fix with `npm run lint -- --fix` fails to resolve all issues
    - Biome check reports unfixable errors
 
 3. **Type Safety Violations** (no retries, immediate halt):
+
    - `any` type detected in generated code (violates `@typescript-eslint/no-explicit-any`)
    - Unsafe type assertions (`as unknown as T`)
    - Missing return type annotations on exported functions
 
 4. **Tool Access Denied** (no retries):
+
    - `search/codebase` permission denied
    - `edit/createFile` fails due to file system restrictions
    - `runCommands` blocked by security policy
 
 5. **Test Failures** (after 3 fix attempts):
+
    - `npm test` exits with non-zero code
    - Coverage below 80% threshold (configurable)
    - Timeout errors (tests exceed 30s per suite)
@@ -219,6 +235,7 @@ Generation must halt immediately if any of the following occur:
    - `npm run format:check` → formatting diffs remain after auto-fix
 
 **Error Reporting Format**:
+
 ```markdown
 ❌ **Generation Halted**
 
@@ -228,12 +245,14 @@ Generation must halt immediately if any of the following occur:
 **Manual Action Required**: [Step-by-step resolution guide]
 
 **Context**:
+
 - Input: serverName="${serverName}", toolNames=[${toolNames}]
 - Lint Tool: ${lintTool}
 - Retry Count: X/3
 ```
 
 **Success Criteria** (all must pass):
+
 - [ ] All input validations passed
 - [ ] Lint errors = 0, warnings = 0
 - [ ] Tests pass with coverage ≥80%

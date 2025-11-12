@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # GitHub Copilot Spec-Driven Development - Setup Script
 # Version: 1.0.0
 # Description: Installs and configures the spec-driven development environment
 
-set -e  # Exit on error
+set -euo pipefail  # Exit on error, undefined var errors, and fail on pipe errors
 
 # Colors for output
 RED='\033[0;31m'
@@ -81,9 +81,10 @@ detect_installation_mode() {
     print_header "Detecting Installation Mode"
     
     # Check if we're in the spec-development repo itself
-    if [ -f "$PROJECT_ROOT/template/.github/prompts/ikak:constitution.prompt.md" ]; then
+    # Prefer a reliable existence check of the bundled template directory
+    if [ -d "$PROJECT_ROOT/template" ]; then
         echo "existing"
-        print_info "Detected: Existing spec-development repository"
+        print_info "Detected: Existing spec-development repository (template/ found)"
         print_info "Mode: Copy templates from template/ directory"
     else
         echo "new"

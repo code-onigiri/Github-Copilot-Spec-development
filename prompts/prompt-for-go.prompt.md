@@ -1,5 +1,5 @@
 ---
-id: mcp-server-generator
+id: language-prompt
 author: aggregation
 language: go
 version: 0.2.0

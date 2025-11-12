@@ -600,7 +600,7 @@ jobs:
 
 ### 6.1 統合ポイント
 
-各言語の MCP サーバージェネレータープロンプト (`prompts/*-mcp-server-generator.prompt.md`) に以下を統合済み:
+各言語の MCP サーバージェネレータープロンプト (`prompts/prompt-for-*.prompt.md`) に以下を統合済み:
 
 1. **Validation Section**: Required Checks, Commands (5-6), Edge Cases (4-5), Failure Modes (4-5)
 2. **Style & Lint Enforcement**: Ultra-strict rules reference to `lint/{language}/` configs

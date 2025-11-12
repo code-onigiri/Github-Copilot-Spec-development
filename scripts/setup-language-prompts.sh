@@ -12,8 +12,16 @@ META_DIR="$REPO_ROOT/memory/language-meta"
 mkdir -p "$META_DIR"
 
 if [ ! -f "$MANIFEST" ]; then
-  echo "[error] manifest.json not found in prompts/" >&2
-  exit 1
+  echo "[warn] manifest.json not found in prompts/ - attempting to generate..."
+  if command -v python3 >/dev/null 2>&1; then
+    python3 "$REPO_ROOT/scripts/generate-manifest.py" || {
+      echo "[error] failed to generate manifest.json" >&2
+      exit 1
+    }
+  else
+    echo "[error] python3 not found; cannot generate manifest.json" >&2
+    exit 1
+  fi
 fi
 
 PRIMARY_LANG=""
@@ -84,19 +92,25 @@ meta_file="$META_DIR/detected.json"
 {
   echo '{'
   echo '  "detected": {'
-  first=1
+  # Print detected language counts with proper commas
+  i=0
   for lang in "${!counts[@]}"; do
-    if [ $first -eq 0 ]; then echo ','; fi
-    echo -n "    \"$lang\": ${counts[$lang]}"
-    first=0
+    if [ "$i" -gt 0 ]; then
+      echo ','
+    fi
+    printf '    "%s": %s' "$lang" "${counts[$lang]}"
+    i=$((i+1))
   done
   echo
   echo '  },'
   echo "  \"primary\": \"$PRIMARY_LANG\","
+  # missingPrompts array
   echo -n '  "missingPrompts": ['
-  for i in "${!missing[@]}"; do
-    if [ $i -gt 0 ]; then echo -n ', '; fi
-    echo -n "\"${missing[$i]}\""
+  for idx in "${!missing[@]}"; do
+    if [ "$idx" -gt 0 ]; then
+      echo -n ', '
+    fi
+    echo -n "\"${missing[$idx]}\""
   done
   echo ']'
   echo '}'
@@ -106,7 +120,7 @@ echo "[info] meta written: $meta_file"
 
 if [ ${#missing[@]} -gt 0 ]; then
   echo "[warn] Missing prompt definitions for: ${missing[*]}"
-  echo "       -> create '<language>-mcp-server-generator.prompt.md' using template."
+  echo "       -> create 'prompt-for-<language>.prompt.md' using template."
 fi
 
 echo "[done] setup-language-prompts"

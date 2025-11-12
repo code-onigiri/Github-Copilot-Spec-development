@@ -42,10 +42,10 @@ save_file() {
 # 取得候補の例 (必要に応じて拡張)
 UPSTREAM_FILES=(
   ".github/prompts/typescript-mcp-server.instructions.md"
-  ".github/prompts/go-mcp-server-generator.prompt.md"
-  ".github/prompts/rust-mcp-server-generator.prompt.md"
-  ".github/prompts/java-mcp-server-generator.prompt.md"
-  ".github/prompts/csharp-mcp-server-generator.prompt.md"
+  ".github/prompts/prompt-for-go.prompt.md"
+  ".github/prompts/prompt-for-rust.prompt.md"
+  ".github/prompts/prompt-for-java.prompt.md"
+  ".github/prompts/prompt-for-csharp.prompt.md"
 )
 
 for f in "${UPSTREAM_FILES[@]}"; do
