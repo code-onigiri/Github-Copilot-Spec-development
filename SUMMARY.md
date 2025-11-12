@@ -242,17 +242,23 @@ graph LR
 - [debug-driven-fixing.md](docs/features/debug-driven-fixing.md) - デバッグ駆動修正
 - [flexible-principles.md](docs/features/flexible-principles.md) - 柔軟な原則
 - [github-integration.md](docs/features/github-integration.md) - GitHub 統合
+- [language-specific-support.md](docs/features/language-specific-support.md) - 言語別詳細サポート
 - [multilingual.md](docs/features/multilingual.md) - 多言語対応
 - [progressive-adoption.md](docs/features/progressive-adoption.md) - 段階的導入
 - [triple-memory.md](docs/features/triple-memory.md) - トリプルメモリ
 
 ### docs/research/ - 調査資料
 
+- [awesome-copilot-language-prompts.md](docs/research/awesome-copilot-language-prompts.md) - 言語別プロンプト / 規約調査
 - [github-copilot-customization.md](docs/research/github-copilot-customization.md) - Copilot カスタマイズ機能
 - [github-copilot-customization-detailed.md](docs/research/github-copilot-customization-detailed.md) - 詳細ガイド
 - [spec-kit-analysis.md](docs/research/spec-kit-analysis.md) - spec-kit 分析
 - [comparison.md](docs/research/comparison.md) - 類似ツール比較
 - [unique-value-proposition.md](docs/research/unique-value-proposition.md) - 独自の価値提案
+
+### プロンプトコレクション
+
+- [prompts/README.md](prompts/README.md) - 標準化プロンプト形式と一覧
 
 ---
 

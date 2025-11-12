@@ -115,6 +115,29 @@ Constitution で自由に開発原則を定義可能。TDD、SOLID、DDD など�
 
 ---
 
+### [言語別詳細サポート](./language-specific-support.md) 🆕
+
+選択したプログラミング言語に合わせて、スタイルガイド要点・プロンプトテンプレート・MCP パターン・テスト最低限例を即時提示し、初回生成品質と一貫性を向上。
+
+**主な機能:**
+
+- 言語検出 & 選択 UI
+- 規約/アンチパターン ダイジェスト
+- プロンプトギャラリー (Mission / Workflow / Validation 形式)
+- MCP サーバー/ハンドラ生成雛形リンク
+- 最低限テストマトリクス (成功 + 失敗)
+- キャッシュ & 差分更新
+
+**使用例:**
+
+```text
+/ikak:language support go
+```
+
+**関連調査:** `docs/research/awesome-copilot-language-prompts.md`
+
+---
+
 ## 機能の組み合わせ
 
 これらの機能は独立して使用できますが、組み合わせることでさらに強力になります:

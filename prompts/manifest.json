@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0.0",
+  "generated": "2025-11-11",
+  "languages": [
+    {
+      "language": "typescript",
+      "prompts": ["typescript-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "go",
+      "prompts": ["go-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "rust",
+      "prompts": ["rust-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "java",
+      "prompts": ["java-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "csharp",
+      "prompts": ["csharp-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "ruby",
+      "prompts": ["ruby-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "php",
+      "prompts": ["php-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "swift",
+      "prompts": ["swift-mcp-server-generator.prompt.md"],
+      "primary": true
+    },
+    {
+      "language": "kotlin",
+      "prompts": ["kotlin-mcp-server-generator.prompt.md"],
+      "primary": true
+    }
+  ]
+}
