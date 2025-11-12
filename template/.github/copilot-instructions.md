@@ -134,10 +134,34 @@ This means: Tailwind CSS, mobile-first, card-based layout.
 If 'modern' means something else, please specify which aspect is different."
 ```
 
-## Constitution
+## AI-Managed Memory System
 
-If `/memory/constitution.md` exists, check all plans against project principles.
-ERROR if violations cannot be justified.
+This project uses an AI-managed memory system for production-grade development. You are responsible for maintaining and updating the memory files as the project evolves.
+
+### Memory Layers
+
+1. **Constitution** (`memory/constitution.md`): Core principles and rules
+   - Check all plans against these principles
+   - ERROR if violations cannot be justified
+   - Amendments require version bump and rationale
+
+2. **Context** (`memory/context/`): Evolving technical knowledge
+   - `architecture.md` - Update as architecture decisions are made
+   - `conventions.md` - Record coding patterns as they emerge
+   - `tech-stack.md` - Document technology choices and rationale
+   - `domain.md` - Capture business domain understanding
+
+3. **Changelog** (`memory/changelog/`): Historical record
+   - `project-changelog.md` - Append significant decisions and changes
+
+### Your Responsibilities
+
+- **Before Suggesting**: Read relevant memory files for context
+- **During Implementation**: Update context files when patterns emerge
+- **After Decisions**: Record significant choices in changelog
+- **Always**: Validate against constitution principles
+
+This is not a prototype system - maintain memory files professionally for production use.
 
 ## Error Handling
 

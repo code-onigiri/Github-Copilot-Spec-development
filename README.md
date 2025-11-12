@@ -1,57 +1,126 @@
-# GitHub Copilot Spec Driven Development
+# GitHub Copilot Spec-Driven Development
 
-Specification-Driven Development with GitHub Copilot - A development environment for specification-first development.
+A production-ready specification-driven development framework optimized for GitHub Copilot.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-Optimized-blue)](https://github.com/features/copilot)
 
 ## 🎯 Overview
 
-This is a systematic Spec-Driven Development environment designed to maximize the capabilities of GitHub Copilot.
-Inspired by [GitHub spec-kit](https://github.com/github/spec-kit), it is optimized specifically for GitHub Copilot Chat.
+A systematic Spec-Driven Development (SDD) environment that leverages GitHub Copilot's AI capabilities for professional software development. Inspired by [GitHub spec-kit](https://github.com/github/spec-kit), this framework provides a structured approach to building production-grade applications.
 
-**Core Concept**: `Specify` → `Plan` → `Tasks` → `Implement`
+**Core Workflow**: `Specify` → `Plan` → `Tasks` → `Implement`
 
 ---
 
 ## ✨ Key Features
 
-- **Specification-First**: A development process that starts with defining specifications.
-- **AI-Optimized**: Prompts and structures optimized for GitHub Copilot.
-- **Structured Memory**: A mechanism for the AI to remember project context.
-- **Language-Agnostic**: Can be adapted to various programming languages.
+- **Specification-First Development**: Start with clear specifications before writing code
+- **AI-Managed Memory**: Automated context management by AI for better code generation
+- **Production-Ready**: Designed for building production-grade applications, not prototypes
+- **GitHub Copilot Integration**: Deep integration with GitHub Copilot's customization features
+- **Language-Agnostic**: Supports multiple programming languages and frameworks
 
-## 🚀 Quick Start
+## 🏗️ Architecture
+
+This framework provides:
+
+- **Custom Instructions**: AI behavior customization via `.github/copilot-instructions.md`
+- **Chat Modes**: Specialized AI personas for different development phases
+- **Reusable Prompts**: Pre-built prompts for common development tasks
+- **Memory System**: AI-managed project context and memory
+- **Template System**: Consistent specification and planning templates
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - GitHub Copilot License
-- VS Code + GitHub Copilot Extension
+- VS Code with GitHub Copilot Extension
 - Git
 
 ### Installation
 
-Execute the following command to install the necessary files into your project.
+Clone the repository and run the installation script in your project:
 
 ```bash
-# Add to an existing project
+# Navigate to your project directory
 cd your-project
-curl -fsSL https://raw.githubusercontent.com/code-onigiri/Github-Copilot-Spec-development/main/scripts/quick-install.sh | bash
+
+# Clone the framework
+git clone https://github.com/code-onigiri/Github-Copilot-Spec-development.git
+
+# Run the installer
+cd Github-Copilot-Spec-development
+bash scripts/install.sh
 ```
 
-### Development Flow
+The installer will:
+1. Copy templates to your project
+2. Set up the directory structure
+3. Configure VS Code settings
+4. Initialize the memory system
 
-#### 1. Create Project Constitution (First time only)
+### Basic Usage
 
-Define the project's principles and rules in an interactive manner.
-(Implementation details for how to trigger this will be provided)
+1. **Define Project Constitution** (first time only)
+   - Use `/ikak:constitution` command to set up project principles
 
-#### 2. Create Specifications
+2. **Create Feature Specifications**
+   - Use `/ikak:specify [description]` to create specifications
 
-Define the features and requirements of your application.
+3. **Generate Implementation Plan**
+   - Use `/ikak:plan [technical-details]` to design the solution
 
-#### 3. Implement
+4. **Break Down into Tasks**
+   - Use `/ikak:tasks` to create actionable task lists
 
-Implement the features based on the specifications, in collaboration with GitHub Copilot.
+5. **Implement Features**
+   - Use `/ikak:implement [task-id]` to implement specific tasks
 
-For more details, please refer to `GUIDE.md`.
+For detailed documentation, see [GUIDE.md](GUIDE.md).
+
+---
+
+## 📚 Documentation
+
+- **[GUIDE.md](GUIDE.md)** - Complete guide with detailed usage and best practices
+- **[STRUCTURE.md](STRUCTURE.md)** - Directory structure reference
+- **[docs/features/](docs/features/)** - Feature-specific documentation
+- **[Japanese Documentation](docs/ja/README.ja.md)** - 日本語ドキュメント
+
+## 🌐 Language Support
+
+This framework is designed to work with any programming language. Language-specific prompts and configurations are available in the `prompts/` directory.
+
+Supported languages include:
+- TypeScript/JavaScript
+- Go
+- Rust
+- Java
+- C#
+- Ruby
+- PHP
+- Swift
+- Kotlin
+- And more...
+
+## 🤝 Contributing
+
+Contributions are welcome! Please check existing issues or create a new one before submitting pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🔗 Related Projects
+
+- [GitHub spec-kit](https://github.com/github/spec-kit) - The inspiration for this project
+- [GitHub Copilot Documentation](https://docs.github.com/copilot)
+
+---
+
+**Last Updated**: November 12, 2025  
+**Version**: 2.0.0
