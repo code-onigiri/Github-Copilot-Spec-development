@@ -26,12 +26,8 @@ This guide explains the step-by-step process for developing software using this 
    # Navigate to your existing project or create a new one
    cd your-project
 
-   # Clone the framework
-   git clone https://github.com/code-onigiri/Github-Copilot-Spec-development.git
-
    # Run the installer
-   cd Github-Copilot-Spec-development
-   bash scripts/install.sh
+   curl -fsSL https://raw.githubusercontent.com/code-onigiri/Github-Copilot-Spec-development/main/scripts/quick-install.sh | bash
    ```
 
 2. **Open the project** in VS Code.

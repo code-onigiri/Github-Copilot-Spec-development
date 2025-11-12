@@ -12,16 +12,9 @@ META_DIR="$REPO_ROOT/memory/language-meta"
 mkdir -p "$META_DIR"
 
 if [ ! -f "$MANIFEST" ]; then
-  echo "[warn] manifest.json not found in prompts/ - attempting to generate..."
-  if command -v python3 >/dev/null 2>&1; then
-    python3 "$REPO_ROOT/scripts/generate-manifest.py" || {
-      echo "[error] failed to generate manifest.json" >&2
-      exit 1
-    }
-  else
-    echo "[error] python3 not found; cannot generate manifest.json" >&2
-    exit 1
-  fi
+  echo "[error] manifest.json not found in prompts/"
+  echo "[info] The manifest should be AI-managed. Please ensure prompts/manifest.json exists."
+  exit 1
 fi
 
 PRIMARY_LANG=""

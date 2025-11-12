@@ -150,7 +150,8 @@ print_completion() {
     fi
     
     echo "To reinstall, run:"
-    echo "  ${BLUE}bash <(curl -fsSL https://raw.githubusercontent.com/code-onigiri/Github-Copilot-Spec-development/main/scripts/quick-install.sh)${NC}"
+    echo "  ${BLUE}bash scripts/install.sh${NC}"
+    echo "  or clone the repository and run install.sh from the scripts directory"
     echo ""
 }
 

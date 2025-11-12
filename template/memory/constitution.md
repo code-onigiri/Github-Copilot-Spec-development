@@ -9,6 +9,8 @@ Version: 1.0.0
 
 Define the core principles and constraints that govern all development. All specifications, plans, and implementations must align with these principles.
 
+**Note**: This constitution is part of an AI-managed memory system. The AI will reference these principles when making suggestions and validate all changes against them. This ensures consistency in production-grade development.
+
 ## Principles
 
 ### Principle 1: Simplicity First
