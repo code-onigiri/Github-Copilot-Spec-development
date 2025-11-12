@@ -154,10 +154,7 @@ No features yet. Run \`/ikak:specify\` to create your first feature!
 }
 `;
 
-    await FileSystem.writeFile(
-      FileSystem.join(vscodeDir, 'settings.json'),
-      settingsContent
-    );
+    await FileSystem.writeFile(FileSystem.join(vscodeDir, 'settings.json'), settingsContent);
     Logger.success('VS Code settings created');
 
     // Create extensions.json
@@ -169,10 +166,7 @@ No features yet. Run \`/ikak:specify\` to create your first feature!
 }
 `;
 
-    await FileSystem.writeFile(
-      FileSystem.join(vscodeDir, 'extensions.json'),
-      extensionsContent
-    );
+    await FileSystem.writeFile(FileSystem.join(vscodeDir, 'extensions.json'), extensionsContent);
     Logger.success('VS Code extensions recommendations created');
   }
 
@@ -310,7 +304,9 @@ See \`memory/project-status.md\` for current feature list and progress.
 `;
 
     await FileSystem.writeFile(targetFile, content);
-    Logger.success(`README created: ${FileSystem.join('.', targetFile.replace(this.targetDir, ''))}`);
+    Logger.success(
+      `README created: ${FileSystem.join('.', targetFile.replace(this.targetDir, ''))}`
+    );
   }
 
   /**
@@ -319,36 +315,36 @@ See \`memory/project-status.md\` for current feature list and progress.
   private printCompletionSummary(): void {
     Logger.header('Installation Complete! 🎉');
 
-    console.log('GitHub Copilot Spec-Driven Development is now set up!');
-    console.log('');
-    console.log('📁 Files created:');
-    console.log('   ✅ .github/copilot-instructions.md');
-    console.log('   ✅ .github/prompts/* (10 prompts)');
-    console.log('   ✅ .specify/templates/*');
-    console.log('   ✅ memory/constitution.md (template)');
-    console.log('   ✅ memory/context/* (4 context files)');
-    console.log('   ✅ .vscode/settings.json');
-    console.log('');
-    console.log('🚀 Next Steps:');
-    console.log('');
-    console.log('   1. Open your project in VS Code:');
-    console.log('      code .');
-    console.log('');
-    console.log('   2. Create your project constitution:');
-    console.log('      /ikak:constitution');
-    console.log('');
-    console.log('   3. Create your first feature:');
-    console.log('      /ikak:specify "your feature description"');
-    console.log('');
-    console.log('📚 Documentation:');
-    console.log('   • Full Guide: https://github.com/code-onigiri/Github-Copilot-Spec-development');
-    console.log('   • Commands: See .github/copilot-instructions.md');
-    console.log('');
-    console.log('💡 Tips:');
-    console.log('   • All commands start with /ikak:');
-    console.log('   • Constitution defines your project principles');
-    console.log('   • Specs are stored in specs/###-feature-name/');
-    console.log('');
+    Logger.info('GitHub Copilot Spec-Driven Development is now set up!');
+    Logger.info('');
+    Logger.info('📁 Files created:');
+    Logger.info('   ✅ .github/copilot-instructions.md');
+    Logger.info('   ✅ .github/prompts/* (10 prompts)');
+    Logger.info('   ✅ .specify/templates/*');
+    Logger.info('   ✅ memory/constitution.md (template)');
+    Logger.info('   ✅ memory/context/* (4 context files)');
+    Logger.info('   ✅ .vscode/settings.json');
+    Logger.info('');
+    Logger.info('🚀 Next Steps:');
+    Logger.info('');
+    Logger.info('   1. Open your project in VS Code:');
+    Logger.info('      code .');
+    Logger.info('');
+    Logger.info('   2. Create your project constitution:');
+    Logger.info('      /ikak:constitution');
+    Logger.info('');
+    Logger.info('   3. Create your first feature:');
+    Logger.info('      /ikak:specify "your feature description"');
+    Logger.info('');
+    Logger.info('📚 Documentation:');
+    Logger.info('   • Full Guide: https://github.com/code-onigiri/Github-Copilot-Spec-development');
+    Logger.info('   • Commands: See .github/copilot-instructions.md');
+    Logger.info('');
+    Logger.info('💡 Tips:');
+    Logger.info('   • All commands start with /ikak:');
+    Logger.info('   • Constitution defines your project principles');
+    Logger.info('   • Specs are stored in specs/###-feature-name/');
+    Logger.info('');
   }
 
   /**
@@ -377,7 +373,9 @@ See \`memory/project-status.md\` for current feature list and progress.
           Logger.warning('Could not open VS Code automatically');
         }
       } else {
-        Logger.warning('VS Code not found. Please open your project and run /ikak:constitution manually.');
+        Logger.warning(
+          'VS Code not found. Please open your project and run /ikak:constitution manually.'
+        );
       }
     } else {
       Logger.info('Skipping constitution setup. You can run it later with: /ikak:constitution');
@@ -394,8 +392,8 @@ See \`memory/project-status.md\` for current feature list and progress.
       spinner.stop();
       Logger.header('GitHub Copilot Spec-Driven Development - Setup');
 
-      console.log('This script will set up the spec-driven development environment.');
-      console.log('');
+      Logger.info('This script will set up the spec-driven development environment.');
+      Logger.info('');
 
       // Get project name and target directory if not in skip mode
       if (!options.skipInteractive) {
@@ -469,7 +467,9 @@ See \`memory/project-status.md\` for current feature list and progress.
       }
     } catch (error) {
       spinner.stop();
-      Logger.error(`Installation failed: ${error instanceof Error ? error.message : String(error)}`);
+      Logger.error(
+        `Installation failed: ${error instanceof Error ? error.message : String(error)}`
+      );
       throw error;
     }
   }
