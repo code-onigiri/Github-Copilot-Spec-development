@@ -1,6 +1,6 @@
 # GitHub Copilot Spec-Driven Development
 
-A production-ready specification-driven development framework optimized for GitHub Copilot.
+A production-ready specification-driven development framework for AI coding tools.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-Optimized-blue)](https://github.com/features/copilot)
@@ -68,6 +68,21 @@ node dist/index.js install -d /path/to/project -n "My Project"
 
 See [CLI Documentation](cli/README.md) for more details.
 
+#### Option 3: `curl` + `tar`
+
+For machines where you do not want to `git clone` the repository, download the pre-packaged CLI tarball (e.g., from the releases attached to this repository) and install directly.
+
+```bash
+# download the latest tarball, extract to `/tmp`, and run the CLI installer
+curl -fsSL https://github.com/code-onigiri/Github-Copilot-Spec-development/releases/latest/download/copilot-spec-cli.tar.gz \
+   | tar -xz -C /tmp
+/tmp/copilot-spec-cli/cli/bin/copilot-spec install
+```
+
+If you need a specific version, point `curl` at that release asset instead of `latest`. The included CLI script behaves exactly like the locally built binary described above.
+
+Run `bash scripts/package-cli.sh /path/to/destination/copilot-spec-cli.tar.gz` from this repository to prepare the tarball before publishing it to GitHub Releases or any HTTP file server.
+
 #### Option 2: Bash Script (Legacy)
 
 You can still use the traditional bash script:
@@ -85,6 +100,7 @@ bash scripts/install.sh
 ```
 
 The installer will:
+
 1. Copy templates to your project
 2. Set up the directory structure
 3. Configure VS Code settings
@@ -93,15 +109,19 @@ The installer will:
 ### Basic Usage
 
 1. **Define Project Constitution** (first time only)
+
    - Use `/ikak:constitution` command to set up project principles
 
 2. **Create Feature Specifications**
+
    - Use `/ikak:specify [description]` to create specifications
 
 3. **Generate Implementation Plan**
+
    - Use `/ikak:plan [technical-details]` to design the solution
 
 4. **Break Down into Tasks**
+
    - Use `/ikak:tasks` to create actionable task lists
 
 5. **Implement Features**
@@ -123,6 +143,7 @@ For detailed documentation, see [GUIDE.md](GUIDE.md).
 This framework is designed to work with any programming language. Language-specific prompts and configurations are available in the `prompts/` directory.
 
 Supported languages include:
+
 - TypeScript/JavaScript
 - Go
 - Rust

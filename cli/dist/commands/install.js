@@ -281,36 +281,36 @@ See \`memory/project-status.md\` for current feature list and progress.
      */
     printCompletionSummary() {
         logger_1.Logger.header('Installation Complete! 🎉');
-        console.log('GitHub Copilot Spec-Driven Development is now set up!');
-        console.log('');
-        console.log('📁 Files created:');
-        console.log('   ✅ .github/copilot-instructions.md');
-        console.log('   ✅ .github/prompts/* (10 prompts)');
-        console.log('   ✅ .specify/templates/*');
-        console.log('   ✅ memory/constitution.md (template)');
-        console.log('   ✅ memory/context/* (4 context files)');
-        console.log('   ✅ .vscode/settings.json');
-        console.log('');
-        console.log('🚀 Next Steps:');
-        console.log('');
-        console.log('   1. Open your project in VS Code:');
-        console.log('      code .');
-        console.log('');
-        console.log('   2. Create your project constitution:');
-        console.log('      /ikak:constitution');
-        console.log('');
-        console.log('   3. Create your first feature:');
-        console.log('      /ikak:specify "your feature description"');
-        console.log('');
-        console.log('📚 Documentation:');
-        console.log('   • Full Guide: https://github.com/code-onigiri/Github-Copilot-Spec-development');
-        console.log('   • Commands: See .github/copilot-instructions.md');
-        console.log('');
-        console.log('💡 Tips:');
-        console.log('   • All commands start with /ikak:');
-        console.log('   • Constitution defines your project principles');
-        console.log('   • Specs are stored in specs/###-feature-name/');
-        console.log('');
+        logger_1.Logger.info('GitHub Copilot Spec-Driven Development is now set up!');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('📁 Files created:');
+        logger_1.Logger.info('   ✅ .github/copilot-instructions.md');
+        logger_1.Logger.info('   ✅ .github/prompts/* (10 prompts)');
+        logger_1.Logger.info('   ✅ .specify/templates/*');
+        logger_1.Logger.info('   ✅ memory/constitution.md (template)');
+        logger_1.Logger.info('   ✅ memory/context/* (4 context files)');
+        logger_1.Logger.info('   ✅ .vscode/settings.json');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('🚀 Next Steps:');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('   1. Open your project in VS Code:');
+        logger_1.Logger.info('      code .');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('   2. Create your project constitution:');
+        logger_1.Logger.info('      /ikak:constitution');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('   3. Create your first feature:');
+        logger_1.Logger.info('      /ikak:specify "your feature description"');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('📚 Documentation:');
+        logger_1.Logger.info('   • Full Guide: https://github.com/code-onigiri/Github-Copilot-Spec-development');
+        logger_1.Logger.info('   • Commands: See .github/copilot-instructions.md');
+        logger_1.Logger.info('');
+        logger_1.Logger.info('💡 Tips:');
+        logger_1.Logger.info('   • All commands start with /ikak:');
+        logger_1.Logger.info('   • Constitution defines your project principles');
+        logger_1.Logger.info('   • Specs are stored in specs/###-feature-name/');
+        logger_1.Logger.info('');
     }
     /**
      * Run interactive constitution setup
@@ -352,8 +352,8 @@ See \`memory/project-status.md\` for current feature list and progress.
         try {
             spinner.stop();
             logger_1.Logger.header('GitHub Copilot Spec-Driven Development - Setup');
-            console.log('This script will set up the spec-driven development environment.');
-            console.log('');
+            logger_1.Logger.info('This script will set up the spec-driven development environment.');
+            logger_1.Logger.info('');
             // Get project name and target directory if not in skip mode
             if (!options.skipInteractive) {
                 const answers = await inquirer_1.default.prompt([

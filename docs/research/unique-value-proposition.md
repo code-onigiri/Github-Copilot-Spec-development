@@ -5,7 +5,7 @@ t# 独自価値提案とロードマップ
 
 ## エグゼクティブサマリー
 
-本プロジェクトは、**GitHub Copilot Chat 専用に最適化された、日本語ファーストの Spec-Driven Development フレームワーク**です。spec-kit、OpenSpec、cc-sdd の 3 大プロジェクトのベストプラクティスを統合し、GitHub 特有のコンテキストを最大限活用します。
+本プロジェクトは、**AI コーディングツール用に最適化された、日本語ファーストの Spec-Driven Development フレームワーク**です。spec-kit、OpenSpec、cc-sdd の 3 大プロジェクトのベストプラクティスを統合し、GitHub 特有のコンテキストを最大限活用します。
 
 ---
 

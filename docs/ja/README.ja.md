@@ -1,14 +1,14 @@
 # GitHub Copilot Spec 駆動開発
 
-GitHub Copilotの能力を最大限に活用する、仕様ファーストの開発環境です。
+AI コーディングツールの能力を最大限に活用する、仕様ファーストの開発環境です。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-Optimized-blue)](https://github.com/features/copilot)
 
 ## 🎯 概要
 
-GitHub Copilotのために最適化された、体系的なSpec駆動開発環境です。
-[GitHub spec-kit](https://github.com/github/spec-kit)にインスパイアされ、GitHub Copilot Chatに特化して最適化されています。
+AI コーディングツール用に最適化された、体系的な Spec 駆動開発環境です。
+[GitHub spec-kit](https://github.com/github/spec-kit)にインスパイアされ、各種 AI コーディングツールに対応する形で設計・最適化されています。
 
 **コアコンセプト**: `仕様化` → `計画` → `タスク化` → `実装`
 
@@ -17,16 +17,16 @@ GitHub Copilotのために最適化された、体系的なSpec駆動開発環�
 ## ✨ 主な機能
 
 - **仕様ファースト**: 仕様の定義から始まる開発プロセス
-- **AI最適化**: GitHub Copilotに最適化されたプロンプトと構造
-- **構造化メモリ**: AIがプロジェクトコンテキストを記憶する仕組み
+- **AI 最適化**: AI コーディングツールに最適化されたプロンプトと構造
+- **構造化メモリ**: AI がプロジェクトコンテキストを記憶する仕組み
 - **言語非依存**: さまざまなプログラミング言語に対応可能
 
 ## 🚀 クイックスタート
 
 ### 前提条件
 
-- GitHub Copilotライセンス
-- VS Code + GitHub Copilot拡張機能
+- GitHub Copilot ライセンス
+- VS Code + GitHub Copilot 拡張機能
 - Git
 
 ### インストール
@@ -53,7 +53,7 @@ bash scripts/install.sh
 
 #### 3. 実装
 
-仕様に基づいて、GitHub Copilotと協力して機能を実装します。
+仕様に基づいて、GitHub Copilot と協力して機能を実装します。
 
 詳細については、[完全ガイド（日本語）](GUIDE.ja.md)を参照してください。
 
@@ -73,9 +73,9 @@ bash scripts/install.sh
 
 ## 📄 ライセンス
 
-このプロジェクトはMITライセンスの下でライセンスされています。詳細については[LICENSE](../../LICENSE)ファイルを参照してください。
+このプロジェクトは MIT ライセンスの下でライセンスされています。詳細については[LICENSE](../../LICENSE)ファイルを参照してください。
 
 ---
 
-**最終更新**: 2025年11月12日  
+**最終更新**: 2025 年 11 月 12 日  
 **バージョン**: 2.0.0
