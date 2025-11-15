@@ -82,6 +82,7 @@ curl -fsSL https://github.com/code-onigiri/Github-Copilot-Spec-development/relea
 If you need a specific version, point `curl` at that release asset instead of `latest`. The included CLI script behaves exactly like the locally built binary described above.
 
 Run `bash scripts/package-cli.sh /path/to/destination/copilot-spec-cli.tar.gz` from this repository to prepare the tarball before publishing it to GitHub Releases or any HTTP file server.
+Without arguments the script writes `copilot-spec-cli.tar.gz` into this repository's `tmp/` directory and reuses that same folder for transient build files, so you can upload or archive the artifact without touching `/tmp` on your machine.
 
 #### Option 2: Bash Script (Legacy)
 
